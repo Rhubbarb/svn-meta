@@ -1,0 +1,40 @@
+### File and Path Configuration File
+### ================================
+
+### This is usually used to allow only certain file extensions;
+### all paths enabled by default.
+
+### The rules are applied to any file scheduled for addition (without history).
+
+### It is possible to use this in either a white-list or a black-list mode.
+### Black-listing is default; use a final all-exclusive rule for white-listing.
+
+###############################################################################
+
+### SYNTAX
+
+### Enable a path regex with a plus (+) followed by the regex or glob
+### Disable a path regex with a minus (-) followed by the regex or glob
+### Enclose a regex in r<angle brackets> with leading 'r'
+### Enclose space-separated globs in g<angle brackets> with leading 'g'
+
+### Comment lines have a hash (#) as the first non-whitespace character.
+
+### Specify the start of a path with a caret (^)
+### Specify the start of a filename with a slash (/)
+### Specify the end of a path with a dollar ($)
+
+### Example equivalence:
+### g<*.c *.h *.cpp *.hpp> = re</.*\.(c|h|cpp|hpp)$>
+
+###############################################################################
+
+### The following rules are tested in order;
+### the earliest match takes precedence
+
+  + re</.*\.(c|h|cpp|hpp)$>
+  + g<*.pl *.py>
+  + g<*.txt>
+
+### catch-all: exclude everything else
+  - re<.*>

@@ -30,3 +30,11 @@
 # [repository:/baz/fuz]
 # @harry_and_sally = rw
 # * = r
+
+[/]
+* = r
+### required to get log informtion, not just
+### "r1 | (no author) | (no date) | 1 line"
+
+[/]
+Rob = rw

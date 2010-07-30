@@ -1,0 +1,42 @@
+### Line Configuration File
+### =======================
+
+### This is usually used to prohibit the addition of
+### lines with certain undesirable features.
+
+### The rules are applied to any file scheduled
+### for addition or modification.
+### When the file operation is with history,
+### only changes from the copied file are considered.
+
+### Example uses are to ban trailing whitespace,
+### or to restrict leading whitespace to tabs or spaces.
+
+### [To enforce matching line endings,
+### instead ensure that files have the svn:eol-style properly set;
+### i.e. don't try to enforce that with this configuration file.]
+
+###############################################################################
+
+### SYNTAX
+
+### To indicate a section (for certain filename patterns):
+### enclose space-separated globs in g<angle brackets> with leading 'g'
+### (regexes not supported here)
+
+### Within a section, the first non-whitespace character is:
+###   - for a <"description"> in angle brackets and quotes,
+###       followed by prohibited pattern
+###       expressed as a regex in re<angle brackets> with leading 're'
+
+### Comment lines have a hash (#) as the first non-whitespace character.
+
+###############################################################################
+
+### The following rules are tested in an arbitrary order;
+### the globs should be mutually exclusive, but that is not checked.
+
+### 'C' / C++
+	g<*.c *.cpp *.h *.hpp *.py *.pl>
+		- <"indentation with space"> re <^\s* \s*[^\s]>
+		- <"trailing space"> re <\s$>

@@ -1,0 +1,329 @@
+### Property Configuration File
+### ===========================
+
+### This is usually used to mandate certain properties on certain file types,
+### often assisted by being used alongside the client <config> file;
+### all properties are optional by default.
+
+### The rules are applied to any file scheduled for addition (without history).
+
+### The rules are only for versioned properies.
+
+###############################################################################
+
+### SYNTAX
+
+### To indicate a section (for certain filename patterns):
+### enclose space-separated globs in g<angle brackets> with leading 'g'
+### (regexes not supported here)
+
+### Within a section, the first non-whitespace character is:
+###   + for a mandatory property (with value)
+###   - for a prohibited property
+###   = for an optional property but with a restricted value
+
+### Comment lines have a hash (#) as the first non-whitespace character.
+
+###############################################################################
+
+### The following rules are tested in an arbitrary order;
+### the globs should be mutually exclusive, but that is not checked.
+
+### 'C' / C++
+	g<*.c *.cpp *.h *.hpp>
+		+ svn:eol-style = native
+		+ svn:keywords = Rev URL
+		+ svn:mime-type = text/plain
+
+	g<*.rc *.rc2>
+		+ svn:mime-type = text/plain
+
+	g<*.dsp *.dsw *.vcproj *.sln *.vsprops>
+		= svn:eol-style = CRLF
+		- svn:keywords
+
+### C#
+	g<*.cs>
+		+ svn:keywords = Rev URL
+		+ svn:mime-type = text/plain
+
+### Java
+	g<*.java *.jsp>
+		+ svn:eol-style = native
+		+ svn:keywords = Rev URL
+		+ svn:mime-type = text/plain
+
+### Perl
+	g<*.pl *.pm>
+		+ svn:eol-style = native
+		+ svn:executable
+		+ svn:keywords = Rev URL
+		+ svn:mime-type = text/plain
+
+### Python
+	g<*.py>
+		+ svn:eol-style = native
+		+ svn:executable
+		+ svn:keywords = Rev URL
+		+ svn:mime-type = text/x-python
+
+### EcmaScript
+	g<*.js>
+		+ svn:keywords = Rev URL
+
+		#+ svn:mime-type = application/x-javascript
+
+		#+ svn:mime-type = text/ecmascript
+		### (obsolete)
+		+ svn:mime-type = text/javascript
+		### (obsolete)
+
+### Q
+	g<*.q>
+		+ svn:executable
+		+ svn:keywords = Rev URL
+		+ svn:mime-type = text/plain
+
+### Pure
+	g<.pure>
+
+### Bash
+	g<*.sh>
+		+ svn:eol-style = LF
+		+ svn:executable
+		#+ svn:mime-type = application/x-sh
+		+ svn:mime-type = text/x-sh
+
+### batch / DOS box / command chell
+	g<*.bat *.cmd>
+		+ svn:eol-style = CRLF
+		+ svn:executable
+		#+ svn:mime-type = application/bat
+		+ svn:mime-type = text/plain
+
+### plain text
+	g<*.txt>
+		+ svn:eol-style = native
+		- svn:executable
+		+ svn:mime-type = text/plain
+
+### XML
+	g<*.xml>
+		+ svn:eol-style = native
+		+ svn:mime-type = text/xml
+	g<*.css>
+		+ svn:eol-style = native
+		+ svn:mime-type = text/css
+	g<*.xsl *.xslt>
+		+ svn:eol-style = native
+		+ svn:mime-type = text/xml
+	g<*.xsd>
+		+ svn:eol-style = native
+		+ svn:mime-type = text/xml
+
+### Web
+	g<*.html *.htm>
+		+ svn:eol-style = native
+		+ svn:mime-type = text/html
+	g<*.xhtml> 
+
+	g<*.php>
+		+ svn:eol-style = native
+		+ svn:mime-type = text/html
+
+### image / bitmap
+
+	g< *.png *.gif *.tif *.jpg *.pnm *.pbm *.pgm *.ppm *.bmp >
+		- svn:eol-style
+		- svn:keywords
+		+ svn:needs-lock
+
+	g<*.png>
+		+ svn:mime-type = image/png
+	g<*.gif>
+		+ svn:mime-type = image/gif
+	g<*.tif>
+		+ svn:mime-type = image/tiff
+	g<*.jpg>
+		+ svn:mime-type = image/jpeg
+	g<*.pnm>
+		+ svn:mime-type = image/x-portable-anymap
+	g<*.pbm>
+		+ svn:mime-type = image/x-portable-bitmap
+	g<*.pgm>
+		+ svn:mime-type = image/x-portable-graymap
+	g<*.ppm>
+		+ svn:mime-type = image/x-portable-pixmap
+	g<*.bmp>
+		+ svn:mime-type = image/x-ms-bmp
+
+### SVG
+	g<*.svg>
+		+ svn:eol-style = native
+		+ svn:mime-type = image/svg+xml
+
+### TeX / LaTeX
+	g<*.tex>
+		+ svn:eol-style = native
+		= svn:keywords = Rev URL
+		#+ svn:mime-type = application/x-tex
+		+ svn:mime-type = text/plain
+
+### makefiles
+	g<*.mak Makefile>
+		+ svn:eol-style = native
+		+ svn:mime-type = text/plain
+
+### Documents
+
+	g<*.pdf>
+		- svn:eol-style
+		- svn:keywords
+		+ svn:mime-type = application/pdf
+		+ svn:needs-lock
+	g<*.ps>
+		= svn:eol-style = native
+		- svn:keywords
+		#+ svn:mime-type = application/postscript
+		+ svn:mime-type = text/plain
+	g<*.rtf>
+		- svn:eol-style
+		- svn:keywords
+		+ svn:mime-type = application/rtf
+		+ svn:needs-lock
+	g<*.dvi>
+		- svn:eol-style
+		- svn:keywords
+		+ svn:mime-type = application/x-dvi
+		+ svn:needs-lock
+
+### OpenOffice
+	g< *.odb *.odc *.odf *.odg *.odi *.odm *.odp *.ods *.odt *.otg *.oth *.otp *.ots *.ott *.oxt >
+		- svn:eol-style
+		- svn:keywords
+		+ svn:needs-lock
+
+	g<*.odb>
+		+ svn:mime-type = application/vnd.oasis.opendocument.database
+	g<*.odc>
+		+ svn:mime-type = application/vnd.oasis.opendocument.chart
+	g<*.odf>
+		+ svn:mime-type = application/vnd.oasis.opendocument.formula
+	g<*.odg>
+		+ svn:mime-type = application/vnd.oasis.opendocument.graphics
+	g<*.odi>
+		+ svn:mime-type = application/vnd.oasis.opendocument.image
+	g<*.odm>
+		+ svn:mime-type = application/vnd.oasis.opendocument.text-master
+	g<*.odp>
+		+ svn:mime-type = application/vnd.oasis.opendocument.presentation
+	g<*.ods>
+		+ svn:mime-type = application/vnd.oasis.opendocument.spreadsheet
+	g<*.odt>
+		+ svn:mime-type = application/vnd.oasis.opendocument.text
+	g<*.otg>
+		+ svn:mime-type = application/vnd.oasis.opendocument.graphics-template
+	g<*.oth>
+		+ svn:mime-type = application/vnd.oasis.opendocument.text-web
+	g<*.otp>
+		+ svn:mime-type = application/vnd.oasis.opendocument.presentation-template
+	g<*.ots>
+		+ svn:mime-type = application/vnd.oasis.opendocument.spreadsheet-template
+	g<*.ott>
+		+ svn:mime-type = application/vnd.oasis.opendocument.text-template
+	g<*.oxt>
+		+ svn:mime-type = application/vnd.openofficeorg.extension
+
+### Microsoft Office
+	g< *.doc *.dot *.xla *.xlc *.xlm *.xls *.xlt *.xlw *.msg *.pot *.ppa *.pps *.ppt *.mpp *.mdb *.pub *.vsd *.vst *.vsw >
+		- svn:eol-style
+		- svn:keywords
+		+ svn:needs-lock
+
+	g<*.doc *.dot>
+		+ svn:mime-type = application/msword
+	g<*.xla *.xlc *.xlm *.xls *.xlt *.xlw>
+		+ svn:mime-type = application/vnd.ms-excel
+	g<*.msg>
+		+ svn:mime-type = application/vnd.ms-outlook
+	g<*.pot *.ppa *.pps *.ppt>
+		+ svn:mime-type = application/vnd.ms-powerpoint
+	g<*.mpp>
+		+ svn:mime-type = application/vnd.ms-project
+	g<*.mdb>
+		+ svn:mime-type = application/x-msaccess
+	g<*.pub>
+		+ svn:mime-type = application/x-mspublisher
+	g<*.vsd *.vst *.vsw>
+		+ svn:mime-type = application/x-visio
+
+	g< *.docx *.dotx *.docm *.dotm *.xlsx *.xltx *.xlsm *.xltm *.xlam *.xlsb *.pptx *.potx *.ppsx *.ppam *.pptm *.potm *.ppsm *.sldx *.sldm >
+		- svn:eol-style
+		- svn:keywords
+		+ svn:needs-lock
+
+	g<*.docx>
+		+ svn:mime-type = application/vnd.openxmlformats-officedocument.wordprocessingml.document
+	g<*.dotx>
+		+ svn:mime-type = application/vnd.openxmlformats-officedocument.wordprocessingml.template
+	g<*.docm>
+		+ svn:mime-type = application/vnd.ms-word.document.macroEnabled.12
+	g<*.dotm>
+		+ svn:mime-type = application/vnd.ms-word.template.macroEnabled.12
+	g<*.xlsx>
+		+ svn:mime-type = application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+	g<*.xltx>
+		+ svn:mime-type = application/vnd.openxmlformats-officedocument.spreadsheetml.template
+	g<*.xlsm>
+		+ svn:mime-type = application/vnd.ms-excel.sheet.macroEnabled.12
+	g<*.xltm>
+		+ svn:mime-type = application/vnd.ms-excel.template.macroEnabled.12
+	g<*.xlam>
+		+ svn:mime-type = application/vnd.ms-excel.addin.macroEnabled.12
+	g<*.xlsb>
+		+ svn:mime-type = application/vnd.ms-excel.sheet.binary.macroEnabled.12
+	g<*.pptx>
+		+ svn:mime-type = application/vnd.openxmlformats-officedocument.presentationml.presentation
+	g<*.potx>
+		+ svn:mime-type = application/vnd.openxmlformats-officedocument.presentationml.template
+	g<*.ppsx>
+		+ svn:mime-type = application/vnd.openxmlformats-officedocument.presentationml.slideshow
+	g<*.ppam>
+		+ svn:mime-type = application/vnd.ms-powerpoint.addin.macroEnabled.12
+	g<*.pptm *.potm>
+		+ svn:mime-type = application/vnd.ms-powerpoint.presentation.macroEnabled.12
+	g<*.ppsm>
+		+ svn:mime-type = application/vnd.ms-powerpoint.slideshow.macroEnabled.12
+	g<*.sldx>
+		+ svn:mime-type = application/vnd.openxmlformats-officedocument.presentationml.slide
+	g<*.sldm>
+		+ svn:mime-type = application/vnd.ms-powerpoint.slide.macroEnabled.12
+
+### executables
+	g<*.exe>
+		- svn:eol-style
+		+ svn:executable
+		- svn:keywords
+		+ svn:mime-type = application/octet-stream
+	g<*.dll>
+		- svn:eol-style
+		+ svn:executable
+		- svn:keywords
+		+ svn:mime-type = application/x-msdownload
+
+### archives
+	g< *.bz2 *.gz *.tar *.tgz *.zip >
+		- svn:eol-style
+		- svn:keywords
+		+ svn:needs-lock
+
+	g<*.bz2>
+		+ svn:mime-type = application/x-bzip2
+	g<*.gz>
+		+ svn:mime-type = application/x-gzip
+	g<*.tar>
+		+ svn:mime-type = application/x-tar
+	g<*.tgz>
+		+ svn:mime-type = application/x-compressed
+	g<*.zip>
+		+ svn:mime-type = application/zip

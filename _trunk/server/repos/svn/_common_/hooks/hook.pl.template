@@ -1,0 +1,61 @@
+#!/usr/bin/perl
+
+#subroutine::common::msg_now_banner();
+
+### Parameters
+
+$repos = $ARGV[0];
+#...
+
+### Options
+
+### Variables
+
+### Result
+
+$return = 0;
+
+### ===========================================================================
+### Modules to use
+
+#use File::Basename;
+
+### ---------------------------------------------------------------------------
+### Function definitions
+
+#use subroutine::common;
+
+### ===========================================================================
+### Get the repository information
+
+$youngest = `svnlook youngest $repos`;
+
+### ---------------------------------------------------------------------------
+### Other...
+
+### ===========================================================================
+### Start
+
+### ---------------------------------------------------------------------------
+### Check ...
+
+if (1)
+{
+	foreach $thing (@things)
+	{
+		chomp($thing);
+		#subroutine::common::msg_debug("thing: $thing");
+		
+		if (problem)
+		{
+			subroutine::common::msg_error("problem.", $return);
+		}
+	}
+}
+
+### ===========================================================================
+### Finish
+
+#subroutine::common::msg_now_banner();
+subroutine::common::msg_exit_code($return);
+exit $return;

@@ -1,0 +1,22 @@
+
+verify script
+hot-copy script
+schedule setup scripts (Windows sc?; Linux cron?)
+
+version control all the scripts
+
+update <config>
+
+repository structure setup script
+
+implement conditions on deleted lines?
+
+? check presence of keywords in files (in addition to properties)
+
+? check file encoding? (e.g. 1252 versus UCS-2_LE; e.g. Win v. Unix)
+
+check for final empty line in file
+(first line and last line conditions?)
+
+bash-style hook wrappers
+bash-style prepare_environment.sh

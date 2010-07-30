@@ -93,6 +93,78 @@
 ### '*' matches leading dots, e.g. '*.rej' matches '.foo.rej'.
 # global-ignores = *.o *.lo *.la *.al .libs *.so *.so.[0-9]* *.a *.pyc *.pyo
 #   *.rej *~ #*# .#* .*.swp .DS_Store
+
+### Rob's global ignores
+### [!a-zA-Z0-9_] is used for a space
+global-ignores =
+	*##
+	*##.*
+	*.7z
+	*.aps
+	*.bak
+	*.bin
+	*.cd
+	*.class
+	*.dep
+	*.dll
+	*.exe
+	*.exe.*.manifest
+	*.exp
+	*.hm
+	*.idb
+	*.ilk
+	*.intermediate.manifest
+	*.jar
+	*.lib
+	*.lnk
+	*.ncb
+	*.obj
+	*.old
+	*.opt
+	*.pch
+	*.pdb
+	*.plg
+	*.pyc
+	*.pyo
+	*.res
+	*.scc
+	*.suo
+	*.tlb
+	*.tmp
+	*.user
+	*.vspscc
+	*.zip
+	*[!a-zA-Z0-9_]-[!a-zA-Z0-9_]Copy
+	*[!a-zA-Z0-9_]-[!a-zA-Z0-9_]Copy.*
+	*[!a-zA-Z0-9_]-[!a-zA-Z0-9_]Copy[!a-zA-Z0-9_]([1-9][0-9])
+	*[!a-zA-Z0-9_]-[!a-zA-Z0-9_]Copy[!a-zA-Z0-9_]([1-9][0-9]).*
+	*[!a-zA-Z0-9_]-[!a-zA-Z0-9_]Copy[!a-zA-Z0-9_]([2-9])
+	*[!a-zA-Z0-9_]-[!a-zA-Z0-9_]Copy[!a-zA-Z0-9_]([2-9]).*
+	*~
+	BuildLog.htm
+	Copy[!a-zA-Z0-9_]([1-9][0-9])[!a-zA-Z0-9_]of[!a-zA-Z0-9_]*
+	Copy[!a-zA-Z0-9_]([2-9])[!a-zA-Z0-9_]of[!a-zA-Z0-9_]*
+	Copy[!a-zA-Z0-9_]of[!a-zA-Z0-9_]*
+	Output-Build.txt
+	RC[ab][0-9][0-9][0-9][0-9][0-9]
+	SciTE.*.session
+	SciTE.session
+	Thumbs.db
+	UpgradeLog.XML
+	UpgradeReport*.*
+	[Dd]ebug
+	[Dd]ebug[Uu]
+	[Rr]elease
+	[Rr]elease[Uu]
+	_UpgradeReport_Files
+	bin
+	build
+	dist
+	lib
+	obj
+	out
+	~*.doc
+
 ### Set log-encoding to the default encoding for log messages
 # log-encoding = latin1
 ### Set use-commit-times to make checkout/update/switch/revert
@@ -113,7 +185,7 @@
 ### Set enable-auto-props to 'yes' to enable automatic properties
 ### for 'svn add' and 'svn import', it defaults to 'no'.
 ### Automatic properties are defined in the section 'auto-props'.
-# enable-auto-props = yes
+enable-auto-props = yes
 ### Set interactive-conflicts to 'no' to disable interactive
 ### conflict resolution prompting.  It defaults to 'yes'.
 # interactive-conflicts = no
@@ -138,3 +210,114 @@
 # *.jpg = svn:mime-type=image/jpeg
 # Makefile = svn:eol-style=native
 
+### Rob's auto-props
+*.bat = svn:eol-style=CRLF;svn:executable;svn:mime-type=text/plain
+*.bmp = svn:mime-type=image/x-ms-bmp;svn:needs-lock
+*.bz2 = svn:mime-type=application/x-bzip2;svn:needs-lock
+*.c = svn:eol-style=native;svn:keywords=Rev URL;svn:mime-type=text/plain
+*.cmd = svn:eol-style=CRLF;svn:executable;svn:mime-type=text/plain
+*.cpp = svn:eol-style=native;svn:keywords=Rev URL;svn:mime-type=text/plain
+*.cs = svn:keywords=Rev URL;svn:mime-type=text/plain
+*.css = svn:eol-style=native;svn:mime-type=text/css
+*.dll = svn:executable;svn:mime-type=application/x-msdownload
+*.doc = svn:mime-type=application/msword;svn:needs-lock
+*.docm = svn:mime-type=application/vnd.ms-word.document.macroEnabled.12;svn:needs-lock
+*.docx = svn:mime-type=application/vnd.openxmlformats-officedocument.wordprocessingml.document;svn:needs-lock
+*.dot = svn:mime-type=application/msword;svn:needs-lock
+*.dotm = svn:mime-type=application/vnd.ms-word.template.macroEnabled.12;svn:needs-lock
+*.dotx = svn:mime-type=application/vnd.openxmlformats-officedocument.wordprocessingml.template;svn:needs-lock
+#*.dsp = svn:eol-style=CRLF
+#*.dsw = svn:eol-style=CRLF
+*.dvi = svn:mime-type=application/x-dvi;svn:needs-lock
+*.exe = svn:executable;svn:mime-type=application/octet-stream
+*.gif = svn:mime-type=image/gif;svn:needs-lock
+*.gz = svn:mime-type=application/x-gzip;svn:needs-lock
+*.h = svn:eol-style=native;svn:keywords=Rev URL;svn:mime-type=text/plain
+*.hpp = svn:eol-style=native;svn:keywords=Rev URL;svn:mime-type=text/plain
+*.htm = svn:eol-style=native;svn:mime-type=text/html
+*.html = svn:eol-style=native;svn:mime-type=text/html
+*.java = svn:eol-style=native;svn:keywords=Rev URL;svn:mime-type=text/plain
+*.jpg = svn:mime-type=image/jpeg;svn:needs-lock
+*.js = svn:keywords=Rev URL;svn:mime-type=text/javascript
+*.jsp = svn:eol-style=native;svn:keywords=Rev URL;svn:mime-type=text/plain
+*.mak = svn:eol-style=native;svn:mime-type=text/plain
+*.mdb = svn:mime-type=application/x-msaccess;svn:needs-lock
+*.mpp = svn:mime-type=application/vnd.ms-project;svn:needs-lock
+*.msg = svn:mime-type=application/vnd.ms-outlook;svn:needs-lock
+*.odb = svn:mime-type=application/vnd.oasis.opendocument.database;svn:needs-lock
+*.odc = svn:mime-type=application/vnd.oasis.opendocument.chart;svn:needs-lock
+*.odf = svn:mime-type=application/vnd.oasis.opendocument.formula;svn:needs-lock
+*.odg = svn:mime-type=application/vnd.oasis.opendocument.graphics;svn:needs-lock
+*.odi = svn:mime-type=application/vnd.oasis.opendocument.image;svn:needs-lock
+*.odm = svn:mime-type=application/vnd.oasis.opendocument.text-master;svn:needs-lock
+*.odp = svn:mime-type=application/vnd.oasis.opendocument.presentation;svn:needs-lock
+*.ods = svn:mime-type=application/vnd.oasis.opendocument.spreadsheet;svn:needs-lock
+*.odt = svn:mime-type=application/vnd.oasis.opendocument.text;svn:needs-lock
+*.otg = svn:mime-type=application/vnd.oasis.opendocument.graphics-template;svn:needs-lock
+*.oth = svn:mime-type=application/vnd.oasis.opendocument.text-web;svn:needs-lock
+*.otp = svn:mime-type=application/vnd.oasis.opendocument.presentation-template;svn:needs-lock
+*.ots = svn:mime-type=application/vnd.oasis.opendocument.spreadsheet-template;svn:needs-lock
+*.ott = svn:mime-type=application/vnd.oasis.opendocument.text-template;svn:needs-lock
+*.oxt = svn:mime-type=application/vnd.openofficeorg.extension;svn:needs-lock
+*.pbm = svn:mime-type=image/x-portable-bitmap;svn:needs-lock
+*.pdf = svn:mime-type=application/pdf;svn:needs-lock
+*.pgm = svn:mime-type=image/x-portable-graymap;svn:needs-lock
+*.php = svn:eol-style=native;svn:mime-type=text/html
+*.pl = svn:eol-style=native;svn:executable;svn:keywords=Rev URL;svn:mime-type=text/plain
+*.pm = svn:eol-style=native;svn:executable;svn:keywords=Rev URL;svn:mime-type=text/plain
+*.png = svn:mime-type=image/png;svn:needs-lock
+*.pnm = svn:mime-type=image/x-portable-anymap;svn:needs-lock
+*.pot = svn:mime-type=application/vnd.ms-powerpoint;svn:needs-lock
+*.potm = svn:mime-type=application/vnd.ms-powerpoint.presentation.macroEnabled.12;svn:needs-lock
+*.potx = svn:mime-type=application/vnd.openxmlformats-officedocument.presentationml.template;svn:needs-lock
+*.ppa = svn:mime-type=application/vnd.ms-powerpoint;svn:needs-lock
+*.ppam = svn:mime-type=application/vnd.ms-powerpoint.addin.macroEnabled.12;svn:needs-lock
+*.ppm = svn:mime-type=image/x-portable-pixmap;svn:needs-lock
+*.pps = svn:mime-type=application/vnd.ms-powerpoint;svn:needs-lock
+*.ppsm = svn:mime-type=application/vnd.ms-powerpoint.slideshow.macroEnabled.12;svn:needs-lock
+*.ppsx = svn:mime-type=application/vnd.openxmlformats-officedocument.presentationml.slideshow;svn:needs-lock
+*.ppt = svn:mime-type=application/vnd.ms-powerpoint;svn:needs-lock
+*.pptm = svn:mime-type=application/vnd.ms-powerpoint.presentation.macroEnabled.12;svn:needs-lock
+*.pptx = svn:mime-type=application/vnd.openxmlformats-officedocument.presentationml.presentation;svn:needs-lock
+*.ps = svn:mime-type=text/plain
+#*.ps = svn:eol-style=native
+*.pub = svn:mime-type=application/x-mspublisher;svn:needs-lock
+*.py = svn:eol-style=native;svn:executable;svn:keywords=Rev URL;svn:mime-type=text/x-python
+*.q = svn:executable;svn:keywords=Rev URL;svn:mime-type=text/plain
+*.rc = svn:mime-type=text/plain
+*.rc2 = svn:mime-type=text/plain
+*.rtf = svn:mime-type=application/rtf;svn:needs-lock
+*.sh = svn:eol-style=LF;svn:executable;svn:mime-type=text/x-sh
+*.sldm = svn:mime-type=application/vnd.ms-powerpoint.slide.macroEnabled.12;svn:needs-lock
+*.sldx = svn:mime-type=application/vnd.openxmlformats-officedocument.presentationml.slide;svn:needs-lock
+#*.sln = svn:eol-style=CRLF
+*.svg = svn:eol-style=native;svn:mime-type=image/svg+xml
+*.tar = svn:mime-type=application/x-tar;svn:needs-lock
+*.tex = svn:eol-style=native;svn:mime-type=text/plain
+#*.tex = svn:keywords=Rev URL
+*.tgz = svn:mime-type=application/x-compressed;svn:needs-lock
+*.tif = svn:mime-type=image/tiff;svn:needs-lock
+*.txt = svn:eol-style=native;svn:mime-type=text/plain
+#*.vcproj = svn:eol-style=CRLF
+*.vsd = svn:mime-type=application/x-visio;svn:needs-lock
+#*.vsprops = svn:eol-style=CRLF
+*.vst = svn:mime-type=application/x-visio;svn:needs-lock
+*.vsw = svn:mime-type=application/x-visio;svn:needs-lock
+*.xla = svn:mime-type=application/vnd.ms-excel;svn:needs-lock
+*.xlam = svn:mime-type=application/vnd.ms-excel.addin.macroEnabled.12;svn:needs-lock
+*.xlc = svn:mime-type=application/vnd.ms-excel;svn:needs-lock
+*.xlm = svn:mime-type=application/vnd.ms-excel;svn:needs-lock
+*.xls = svn:mime-type=application/vnd.ms-excel;svn:needs-lock
+*.xlsb = svn:mime-type=application/vnd.ms-excel.sheet.binary.macroEnabled.12;svn:needs-lock
+*.xlsm = svn:mime-type=application/vnd.ms-excel.sheet.macroEnabled.12;svn:needs-lock
+*.xlsx = svn:mime-type=application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;svn:needs-lock
+*.xlt = svn:mime-type=application/vnd.ms-excel;svn:needs-lock
+*.xltm = svn:mime-type=application/vnd.ms-excel.template.macroEnabled.12;svn:needs-lock
+*.xltx = svn:mime-type=application/vnd.openxmlformats-officedocument.spreadsheetml.template;svn:needs-lock
+*.xlw = svn:mime-type=application/vnd.ms-excel;svn:needs-lock
+*.xml = svn:eol-style=native;svn:mime-type=text/xml
+*.xsd = svn:eol-style=native;svn:mime-type=text/xml
+*.xsl = svn:eol-style=native;svn:mime-type=text/xml
+*.xslt = svn:eol-style=native;svn:mime-type=text/xml
+*.zip = svn:mime-type=application/zip;svn:needs-lock
+Makefile = svn:eol-style=native;svn:mime-type=text/plain

@@ -64,8 +64,15 @@
 ### the earliest match takes precedence
 
   + re</.*\.(c|h|cpp|hpp)$>
-  + g<*.pl *.py>
+  + g<*.pl *.pm>
+  + g<*.py>
+  + g<*.sh>
+  + g<*.bat>
   + g<*.txt>
+  + g<*.reg>
+  + re</.*\.(dsp|dsw|vcproj|sln|vsprops)>
+  + re</.*\.(html|js|php|java|jsp)
+  + re</.*\.(xml|css|xsl|xsd)>
 
 ### catch-all: exclude everything else
   - re<.*>

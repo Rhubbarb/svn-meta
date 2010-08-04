@@ -137,6 +137,12 @@
 		+ svn:eol-style = native
 		- svn:executable
 		+ svn:mime-type = text/plain
+	
+### registry
+	g<*.reg>
+		= svn:eol-style = CRLF
+		- svn:executable
+		#+ svn:mime-type = text/plain
 
 ### XML
 	g<*.xml>

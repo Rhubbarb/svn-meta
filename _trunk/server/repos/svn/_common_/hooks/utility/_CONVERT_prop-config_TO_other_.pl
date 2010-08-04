@@ -48,7 +48,7 @@ if (1)
 		{
 			++ $linenum;
 			chomp ($line);
-			if ($line eq "" or $line ~~ /^\s*\#/)
+			if ($line ~~ /^\s*$/ or $line ~~ /^\s*\#/)
 			{
 				### ignore the line
 			}

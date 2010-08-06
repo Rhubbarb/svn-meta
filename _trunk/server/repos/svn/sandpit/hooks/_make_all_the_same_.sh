@@ -33,6 +33,3 @@ do_cp "post-commit"
 
 do_cp "pre-revprop-change"
 do_cp "post-revprop-change"
-
-do_cp
-do_cp "blibble"

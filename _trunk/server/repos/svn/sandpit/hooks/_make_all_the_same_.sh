@@ -1,8 +1,38 @@
 #!/bin/bash
 
-cp _hook_template_.sh.tmpl start-commit.sh
-cp _hook_template_.sh.tmpl pre-commit.sh
-cp _hook_template_.sh.tmpl post-commit.sh
+### $URL$
+### $Rev$
 
-cp _hook_template_.sh.tmpl pre-revprop-change.sh
-cp _hook_template_.sh.tmpl post-revprop-change.sh
+### ===========================================================================
+
+function do_cp
+{
+	# $1 = destination name
+
+	if [ "$1" == "" ]
+	then
+		echo "error $0 / do_cp : missing parameter"
+	else
+		#fn="$1"
+		fn="$1.sh"
+		if [ -e "$fn" ]
+		then
+			echo "overwriting $fn ..."
+			cp "_hook_template_.sh.tmpl" "$fn"
+		else
+			echo "no $fn to overwrite"
+		fi
+	fi
+}
+
+### ===========================================================================
+
+do_cp "start-commit"
+do_cp "pre-commit"
+do_cp "post-commit"
+
+do_cp "pre-revprop-change"
+do_cp "post-revprop-change"
+
+do_cp
+do_cp "blibble"

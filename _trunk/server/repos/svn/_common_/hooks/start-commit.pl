@@ -2,6 +2,12 @@
 
 ###############################################################################
 ###
+### Subversion Server Repository START-COMMIT Hook
+### ----------------------------------------------
+###
+### $URL$
+### $Rev$
+###
 ### Copyright © 2010 Rob Hubbard.
 ###
 ### This file forms part of Rob Hubbard's Subversion Configuration Suite

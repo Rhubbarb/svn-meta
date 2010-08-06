@@ -1,7 +1,10 @@
-### File and Path Configuration File
-### ================================
-
 ###############################################################################
+###
+### FILE and PATH Configuration File for Subversion Server Repository Hook
+### ----------------------------------------------------------------------
+###
+### $URL$
+### $Rev$
 ###
 ### Copyright © 2010 Rob Hubbard.
 ###

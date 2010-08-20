@@ -9,11 +9,15 @@ goto :EOF
 if "%~1" == "" (
 	echo ERROR : %~nx0 / %0 : missing parameter
 ) else (
-	fc "_hook_template_.bat.tmpl" "%~1.bat" | find "FC: no dif" > nul 
-	if errorlevel 1 (
-		echo ALERT: %~1.bat differs from template
+	if not exist "..\%~1.bat" (
+		echo no:    %~1.bat does not exist
 	) else (
-		echo okay: %~1.bat same as template
+		fc "..\_template\_hook_template_.bat" "..\%~1.bat" | find "FC: no dif" > nul
+		if errorlevel 1 (
+			echo ALERT: %~1.bat differs from template ***
+		) else (
+			echo okay:  %~1.bat same as template
+		)
 	)
 )
 goto :EOF

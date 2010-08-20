@@ -18,9 +18,9 @@ REM *** Copy ***
 if "%~1" == "" (
 	echo Error : %~nx0/%0 : missing parameter
 ) else (
-	if exist "%~1.bat" (
+	if exist "..\%~1.bat" (
 		echo overwriting "%~1.bat" ...
-		copy "_hook_template_.bat.tmpl" "%~1.bat"
+		copy "..\_template\_hook_template_.bat" "..\%~1.bat"
 	) else (
 		echo no "%~1.bat" to overwrite
 	)

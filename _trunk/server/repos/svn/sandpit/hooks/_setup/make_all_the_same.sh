@@ -15,10 +15,10 @@ function do_cp
 	else
 		#fn="$1"
 		fn="$1.sh"
-		if [ -e "$fn" ]
+		if [ -e "../$fn" ]
 		then
 			echo "overwriting $fn ..."
-			cp "_hook_template_.sh.tmpl" "$fn"
+			cp "../_template/_hook_template_.sh" "../$fn"
 		else
 			echo "no $fn to overwrite"
 		fi

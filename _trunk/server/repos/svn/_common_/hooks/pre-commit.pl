@@ -31,7 +31,7 @@
 ### authors or copyright holders be liable for any claim, damages or other
 ### liability, whether in an action of contract, tort or otherwise, arising
 ### from, out of or in connection with the Software or the use or other
-### dealings in the Software. 
+### dealings in the Software.
 ###
 ### "Copyleft; All wrongs reversed."
 ###
@@ -91,7 +91,7 @@ sub special_filter ($$)
 {
 	my $prop_name = shift;
 	my $prop_value = shift;
-	
+
 	if ($prop_name eq "svn:keywords")
 	{
 		my @keywords = split(/ +/,$$prop_value);
@@ -103,7 +103,7 @@ sub special_filter ($$)
 			$keyword = "Author" if $keyword eq "LastChangedBy";
 			$keyword = "URL" if $keyword eq "HeadURL";
 			#"Id"
-			
+
 			@new_keywords = (@new_keywords, $keyword);
 		}
 		@new_keywords = sort(@new_keywords);
@@ -143,7 +143,7 @@ my $youngest = `svnlook youngest $repos`;
 my $potential_rev = $youngest + 1;
 
 $common->msg_info_log_only("txn=$txn, author=$author, next-rev?=$potential_rev");
- 
+
 ### ---------------------------------------------------------------------------
 ### Parse the filename, property and line configuration files
 
@@ -374,7 +374,7 @@ if ($enable_path_checks or $enable_property_checks
 				{
 					my $pattern = $entry->[0];
 					my $allowed = $entry->[1];
-					
+
 					if ("/".$filepath ~~ $pattern)
 					{
 						last;
@@ -397,12 +397,12 @@ if ($enable_path_checks or $enable_property_checks
 							my $prop_value_actual = `svnlook propget -t $txn $repos $prop_name $filepath 2> nul`;
 							my $exists = not $?;
 							special_filter ($prop_name, \$prop_value_actual);
-	
+
 							my $prop_value_specified = $entry->[2];
 							special_filter ($prop_name, \$prop_value_specified);
 							my $required = $entry->[0];
 							my $prohibited = $entry->[1];
-							
+
 							if ($exists)
 							{
 								if ($prohibited)
@@ -430,13 +430,13 @@ if ($enable_path_checks or $enable_property_checks
 				}
 			}
 		}
-		
+
 		if ($enable_tag_protection)
 		{
 			if ("/".$filepath."/" ~~ /\/$tagarea\//)
 			{
 				my $catch = 1;
-				
+
 				### the only permissible exceptions to a tag edit are
 				### deletion of an entire tag
 				### new atomic additions and modifications (i.e. a new tag)
@@ -512,7 +512,7 @@ if ($prevent_double_copying
 	for my $changed_copy (@changes_with_copies)
 	{
 		chomp($changed_copy);
-		
+
 		if ($changed_copy ~~ /^([AUD]) ([+ ]) (.*)$/)
 		{
 			$txn_mode = $1 . $2;

@@ -31,7 +31,7 @@
 ### authors or copyright holders be liable for any claim, damages or other
 ### liability, whether in an action of contract, tort or otherwise, arising
 ### from, out of or in connection with the Software or the use or other
-### dealings in the Software. 
+### dealings in the Software.
 ###
 ### "Copyleft; All wrongs reversed."
 ###
@@ -100,7 +100,7 @@ use subroutine::common;
 if ($allow_only_log_modification)
 {
 	my $is_standard = (substr($propname,0,4) eq "svn:");
-	
+
 	if ($propname ne "svn:log" && $is_standard)
 	{
 		$common->msg_caught("changes to standard property $propname prohibited.", $return);
@@ -133,7 +133,7 @@ if ($backup_values && ($return == 0 or $return == 2))
 
 	my $prefix = common::safe_name ("r${revision}|prop-${propname}|${now}|${action}|${user}|");
 	my $suffix = ".dat";
-	
+
 	### get the property value
 	my $old_value = `svnlook propget -r $revision --revprop $repos $propname`;
 

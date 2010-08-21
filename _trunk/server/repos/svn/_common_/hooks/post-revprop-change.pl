@@ -31,7 +31,7 @@
 ### authors or copyright holders be liable for any claim, damages or other
 ### liability, whether in an action of contract, tort or otherwise, arising
 ### from, out of or in connection with the Software or the use or other
-### dealings in the Software. 
+### dealings in the Software.
 ###
 ### "Copyleft; All wrongs reversed."
 ###
@@ -111,7 +111,7 @@ if ($create_revision_dump)
 
 	my $prefix = common::safe_name ("r${revision}|${now}");
 	my $suffix = ".dat";
-	
+
 	### get the property value
 	#my $new_value = `svnlook propget -r $revision --revprop $repos $propname`;
 

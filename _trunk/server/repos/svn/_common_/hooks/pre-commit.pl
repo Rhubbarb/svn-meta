@@ -563,7 +563,7 @@ if ($prevent_double_copying
 if ($enable_line_checks)
 {
 	@diffs = `svnlook diff -t $txn $repos --no-diff-deleted --diff-copy-from`;
-	$action = ();
+	$fileaction = ();
 	$filepath = ();
 	$line_num = 0;
 	#print STDERR @diffs;
@@ -597,7 +597,7 @@ if ($enable_line_checks)
 		elsif ($diff ~~ /^Property changes on: .*$/)
 		{
 			$filepath = ();
-			@patterns = ();
+			%patterns = ();
 		}
 		elsif ($diff ~~ /^@@ -([0-9]+)(?:,([0-9]+))? \+([0-9]+)(?:,([0-9]+))? @@$/)
 		{

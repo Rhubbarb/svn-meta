@@ -68,7 +68,7 @@ use File::Basename;
 use File::Path 'make_path';
 use File::Spec;
 #use Date::Calc;
-use Mail::Sendmail;
+#use Mail::Sendmail;
 
 ### ---------------------------------------------------------------------------
 ### Function definitions
@@ -121,12 +121,12 @@ if ($create_revision_dump)
 }
 
 ### ---------------------------------------------------------------------------
-### Mail
+### Email
 
-if ($send_mail)
-{
-	# ...
-}
+#if ($send_email)
+#{
+#	# ...
+#}
 
 ### ===========================================================================
 ### Finish

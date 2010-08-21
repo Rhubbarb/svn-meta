@@ -238,7 +238,7 @@ sub _msg_to_log ($$) ### ($self, $text)
 	($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = gmtime(time);
 	my $date = sprintf ("%4d-%02d-%02d", $year+1900,$mon+1,$mday);
 	
-	$open_success = open (my $fh, '>>', "../../../svn-bak/_logging_/hook-log_$self->{repos_base}_$date.txt");
+	my $open_success = open (my $fh, '>>', "../../../svn-bak/_logging_/hook-log_$self->{repos_base}_$date.txt");
 	if ($open_success)
 	{
 		print $fh "$text\n";
@@ -263,7 +263,7 @@ sub write_value ($$$\$) ### ($self, $fn, $text, \$return)
 	}
 	else
 	{
-		$open_success = open (my $fh, '>', $fn);
+		my $open_success = open (my $fh, '>', $fn);
 		if ($open_success)
 		{
 			print $fh $text;

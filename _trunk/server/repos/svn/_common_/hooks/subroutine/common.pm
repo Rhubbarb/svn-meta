@@ -37,6 +37,8 @@
 ###
 ###############################################################################
 
+use strict;
+
 package common;
 
 my $logging_enabled = 1;
@@ -209,7 +211,7 @@ sub msg_now_banner($$$) ### ($self, $end, $return)
 	($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = gmtime(time);
 	my $now = sprintf ("%4d-%02d-%02dT%02d:%02d:%02dZ", $year+1900,$mon+1,$mday,$hour,$min,$sec);
 
-	(my $repos_base = $repos) =~ s(^.*[\/\\])();
+	(my $repos_base = $common::repos) =~ s(^.*[\/\\])();
 	my $label = ($end ? "finish" : "$self->{repos_base} $self->{hook} start") . " $now";
 	my $len = length($label);
 	my $to_pad = 79 - 2 - $len;

@@ -37,36 +37,38 @@
 ###
 ###############################################################################
 
+use strict;
+
 ### Parameters
 
-$repos = $ARGV[0];
-$txn = $ARGV[1];
+my $repos = $ARGV[0];
+my $txn = $ARGV[1];
 
 ### Options
 
-$check_message_nonempty = 1;
-$check_author_and_date_present = 1;
-$enable_path_checks = 1;
-$enable_property_checks = 1;
-$enable_line_checks = 1;
-$prevent_double_copying = 1;
-$enable_tag_protection = 1;
-$prevent_copy_from_tag = 1;
+my $check_message_nonempty = 1;
+my $check_author_and_date_present = 1;
+my $enable_path_checks = 1;
+my $enable_property_checks = 1;
+my $enable_line_checks = 1;
+my $prevent_double_copying = 1;
+my $enable_tag_protection = 1;
+my $prevent_copy_from_tag = 1;
 ### per-user, per-directory access_control is achieved via ../conf/authz
 
 ### Variables
 
-$tagarea = "_tags";
+my $tagarea = "_tags";
 
 ### Result
 
-$return = 0;
+my $return = 0;
 #$return = 2; ### test value
 
 ### ===========================================================================
 ### Class
 
-$common = common->spawn("pre-commit", $repos);
+my $common = common->spawn("pre-commit", $repos);
 
 $common->msg_now_banner(0);
 
@@ -112,50 +114,50 @@ sub special_filter ($$)
 ### ===========================================================================
 ### Defines
 
-($repos_url = $repos) =~ s(\\)(/)g;
+(my $repos_url = $repos) =~ s(\\)(/)g;
 $repos_url = "file:///" . $repos_url;
 
 ### ===========================================================================
 ### Get the whole-transaction information
 
-#$message = `svnlook propget -t $txn $repos --revprop svn:log`;
-$message = `svnlook log -t $txn $repos`;
+#my $message = `svnlook propget -t $txn $repos --revprop svn:log`;
+my $message = `svnlook log -t $txn $repos`;
 
-#$author = `svnlook propget -t $txn $repos --revprop svn:author`;
-$author = `svnlook author -t $txn $repos`;
+#my $author = `svnlook propget -t $txn $repos --revprop svn:author`;
+my $author = `svnlook author -t $txn $repos`;
 chomp($author);
 
-$date = `svnlook propget -t $txn $repos --revprop svn:date`;
+my $date = `svnlook propget -t $txn $repos --revprop svn:date`;
 chomp($date);
 
-#@dirs_changed = `svnlook dirs-changed -t $txn $repos`;
+#my @dirs_changed = `svnlook dirs-changed -t $txn $repos`;
 
-@changed = `svnlook changed -t $txn $repos`;
+my @changed = `svnlook changed -t $txn $repos`;
 
-@changes_with_copies = `svnlook changed --copy-info -t $txn $repos`;
+my @changes_with_copies = `svnlook changed --copy-info -t $txn $repos`;
 
 ### ---------------------------------------------------------------------------
 ### Get the repository information
 
-$youngest = `svnlook youngest $repos`;
-$potential_rev = $youngest + 1;
+my $youngest = `svnlook youngest $repos`;
+my $potential_rev = $youngest + 1;
 
 $common->msg_info_log_only("txn=$txn, author=$author, next-rev?=$potential_rev");
  
 ### ---------------------------------------------------------------------------
 ### Parse the filename, property and line configuration files
 
-$hookpath = File::Spec->canonpath ("$repos/../_common_/hooks/hook_config");
+my $hookpath = File::Spec->canonpath ("$repos/../_common_/hooks/hook_config");
 
-@filename_config = ();
+my @filename_config = ();
 if ($enable_path_checks)
 {
-	$success = open ($fh, '<', "$hookpath/file-config.txt");
+	my $success = open (my $fh, '<', "$hookpath/file-config.txt");
 	if ($success)
 	{
-		@config_lines = <$fh>;
-		$linenum = 0;
-		foreach $line (@config_lines)
+		my @config_lines = <$fh>;
+		my $linenum = 0;
+		foreach my $line (@config_lines)
 		{
 			++ $linenum;
 			chomp ($line);
@@ -165,18 +167,18 @@ if ($enable_path_checks)
 			}
 			elsif ($line ~~ /^\s*([-+])\s*re\s*<(.*[^\s])>\s*$/) ### re<>
 			{
-				$allowed = ($1 eq "+");
-				$pattern_str = $2;
+				my $allowed = ($1 eq "+");
+				my $pattern_str = $2;
 				#$common->msg_debug(">>> re<$pattern_str>");
 				push (@filename_config, [qr($pattern_str), $allowed]);
 			}
 			elsif ($line ~~ /^\s*([-+])\s*g\s*<\s*(.*[^\s])\s*>\s*$/) ### g<>
 			{
-				$allowed = ($1 eq "+");
-				@globs = split(/\s+/,$2);
-				for $glob (@globs)
+				my $allowed = ($1 eq "+");
+				my @globs = split(/\s+/,$2);
+				for my $glob (@globs)
 				{
-					$pattern_str = "/" . glob_to_regex_string($glob);
+					my $pattern_str = "/" . glob_to_regex_string($glob);
 					#$common->msg_debug(">>> g<$glob> = re<$pattern_str>");
 					push (@filename_config, [qr($pattern_str), $allowed]);
 				}
@@ -194,16 +196,16 @@ if ($enable_path_checks)
 	}
 }
 
-%property_config = ();
+my %property_config = ();
 if ($enable_property_checks)
 {
-	$success = open ($fh, '<', "$hookpath/prop-config.txt");
+	my $success = open (my $fh, '<', "$hookpath/prop-config.txt");
 	if ($success)
 	{
-		@config_lines = <$fh>;
-		$linenum = 0;
-		@globs = ();
-		foreach $line (@config_lines)
+		my @config_lines = <$fh>;
+		my $linenum = 0;
+		my @globs = ();
+		foreach my $line (@config_lines)
 		{
 			++ $linenum;
 			chomp ($line);
@@ -217,21 +219,21 @@ if ($enable_property_checks)
 			}
 			elsif ($line ~~ /^\s*([-+=])\s*([^=]*[^=\s])\s*=\s*(.*[^\s])\s*$/)
 			{
-				$required = ($1 eq "+");
-				$prohibited = ($1 eq "-");
-				$prop_name = $2;
-				$prop_value = $3;
-				foreach $glob (@globs)
+				my $required = ($1 eq "+");
+				my $prohibited = ($1 eq "-");
+				my $prop_name = $2;
+				my $prop_value = $3;
+				foreach my $glob (@globs)
 				{
 					$property_config{$glob}{$prop_name} = [$required, $prohibited, $prop_value];
 				}
 			}
 			elsif ($line ~~ /^\s*([-+=])\s*(.*[^\s])\s*$/)
 			{
-				$required = ($1 eq "+");
-				$prohibited = ($1 eq "-");
-				$prop_name = $2;
-				foreach $glob (@globs)
+				my $required = ($1 eq "+");
+				my $prohibited = ($1 eq "-");
+				my $prop_name = $2;
+				foreach my $glob (@globs)
 				{
 					$property_config{$glob}{$prop_name} = [$required, $prohibited, ()];
 				}
@@ -249,16 +251,16 @@ if ($enable_property_checks)
 	}
 }
 
-%line_config = ();
+my %line_config = ();
 if ($enable_line_checks)
 {
-	$success = open ($fh, '<', "$hookpath/line-config.txt");
+	my $success = open (my $fh, '<', "$hookpath/line-config.txt");
 	if ($success)
 	{
-		@config_lines = <$fh>;
-		$linenum = 0;
-		@globs = ();
-		foreach $line (@config_lines)
+		my @config_lines = <$fh>;
+		my $linenum = 0;
+		my @globs = ();
+		foreach my $line (@config_lines)
 		{
 			++ $linenum;
 			chomp ($line);
@@ -273,10 +275,10 @@ if ($enable_line_checks)
 			elsif ($line ~~ /^\s*([-])\s*<"(.*)">\s*re\s*<\s*(.*[^\s])>\s*$/)
 			{
 				#$required = ($1 eq "+");
-				$prohibited = ($1 eq "-");
-				$desc = $2;
-				$pattern_str = $3;
-				foreach $glob (@globs)
+				my $prohibited = ($1 eq "-");
+				my $desc = $2;
+				my $pattern_str = $3;
+				foreach my $glob (@globs)
 				{
 					$line_config{$glob}{$pattern_str} = [$desc,qr($pattern_str)];
 				}
@@ -345,17 +347,17 @@ if ($check_author_and_date_present)
 if ($enable_path_checks or $enable_property_checks
 		or $enable_tag_protection)
 {
-	foreach $changed (@changed)
+	foreach my $changed (@changed)
 	{
 		chomp($changed);
-		$file_action = substr($changed,0,1);
-		$meta_action = substr($changed,1,1);
-		$with_history = substr($changed,2,1);
-		$filepath = substr($changed,4);
+		my $file_action = substr($changed,0,1);
+		my $meta_action = substr($changed,1,1);
+		my $with_history = substr($changed,2,1);
+		my $filepath = substr($changed,4);
 
-		($filebase, $filedir, $fileext) = fileparse ($filepath);
-		$filename = $filebase . $fileext;
-		$is_directory = ($filename eq "");
+		(my $filebase, my $filedir, my $fileext) = fileparse ($filepath);
+		my $filename = $filebase . $fileext;
+		my $is_directory = ($filename eq "");
 
 		#$common->msg_debug("$file_action$meta_action$with_history $filedir$filebase$fileext");
 
@@ -367,11 +369,11 @@ if ($enable_path_checks or $enable_property_checks
 			### check that the new file may be added (extension or pattern)
 			if ($enable_path_checks)
 			{
-				$allowed = 1;
-				foreach $entry (@filename_config)
+				my $allowed = 1;
+				foreach my $entry (@filename_config)
 				{
-					$pattern = $entry->[0];
-					$allowed = $entry->[1];
+					my $pattern = $entry->[0];
+					my $allowed = $entry->[1];
 					
 					if ("/".$filepath ~~ $pattern)
 					{
@@ -386,20 +388,20 @@ if ($enable_path_checks or $enable_property_checks
 
 			if ($enable_property_checks)
 			{
-				while(($glob, $props) = each(%property_config))
+				while((my $glob, my $props) = each(%property_config))
 				{
 					if ($filename ~~ glob_to_regex($glob))
 					{
-						while(($prop_name, $entry) = each(%{$props}))
+						while((my $prop_name, my $entry) = each(%{$props}))
 						{
-							$prop_value_actual = `svnlook propget -t $txn $repos $prop_name $filepath 2> nul`;
-							$exists = not $?;
+							my $prop_value_actual = `svnlook propget -t $txn $repos $prop_name $filepath 2> nul`;
+							my $exists = not $?;
 							special_filter ($prop_name, \$prop_value_actual);
 	
-							$prop_value_specified = $entry->[2];
+							my $prop_value_specified = $entry->[2];
 							special_filter ($prop_name, \$prop_value_specified);
-							$required = $entry->[0];
-							$prohibited = $entry->[1];
+							my $required = $entry->[0];
+							my $prohibited = $entry->[1];
 							
 							if ($exists)
 							{
@@ -433,24 +435,24 @@ if ($enable_path_checks or $enable_property_checks
 		{
 			if ("/".$filepath."/" ~~ /\/$tagarea\//)
 			{
-				$catch = 1;
+				my $catch = 1;
 				
 				### the only permissible exceptions to a tag edit are
 				### deletion of an entire tag
 				### new atomic additions and modifications (i.e. a new tag)
 				if ($file_action eq "D")
 				{
-					@log = `svn log --stop-on-copy -qvr1:HEAD --limit 1 $repos_url/$filepath`;
-					for $log (@log)
+					my @log = `svn log --stop-on-copy -qvr1:HEAD --limit 1 $repos_url/$filepath`;
+					for my $log (@log)
 					{
 						chomp($log);
 						if ($log ~~ /   [A] (.+) \(from (.+):([0-9]+)\)/)
 						{
-							($log_to_path = $1) =~ s(^/)();
-							#$log_from_path = $2;
-							#$log_from_rev = $3;
+							(my $log_to_path = $1) =~ s(^/)();
+							#my $log_from_path = $2;
+							#my $log_from_rev = $3;
 
-							($txn_path = $filepath) =~ s(/$)();
+							(my $txn_path = $filepath) =~ s(/$)();
 							#$common->msg_debug("$txn_path =? $log_to_path");
 							if ($txn_path eq $log_to_path)
 							{
@@ -463,17 +465,17 @@ if ($enable_path_checks or $enable_property_checks
 
 				if ($catch)
 				{
-					($txn_parent = $filepath) =~ s(/[^/]+/?$)();
+					(my $txn_parent = $filepath) =~ s(/[^/]+/?$)();
 					#$common->msg_debug("parent = $repos_url/$txn_parent");
-					@log = `svn log --stop-on-copy -qvr1:HEAD --limit 1 $repos_url/$txn_parent 2> nul`;
-					$log_error = $?;
+					my @log = `svn log --stop-on-copy -qvr1:HEAD --limit 1 $repos_url/$txn_parent 2> nul`;
+					my $log_error = $?;
 					#$common->msg_debug("err = $log_error");
 					if ($log_error)
 					{
 						### okay: this is the creation of a new (possibly complex) tag
 						$catch = 0;
 					}
-					for $log (@log)
+					for my $log (@log)
 					{
 						chomp($log);
 						if ($log ~~ /^   [AMD] /)
@@ -502,7 +504,12 @@ if ($prevent_double_copying
 {
 	#$common->msg_debug("\n@changes_with_copies");
 
-	for $changed_copy (@changes_with_copies)
+	my $txn_mode = ();
+	my $txn_from_path = ();
+	my $txn_to_path = ();
+	my $txn_from_rev = ();
+
+	for my $changed_copy (@changes_with_copies)
 	{
 		chomp($changed_copy);
 		
@@ -531,19 +538,19 @@ if ($prevent_double_copying
 			{
 				### find the revision in which the parent was created
 				### (did this have history?)
-				($txn_to_parent = $txn_to_path) =~ s(/[^/]+/?$)();
+				(my $txn_to_parent = $txn_to_path) =~ s(/[^/]+/?$)();
 				#$common->msg_debug("parent = $repos_url/$txn_to_parent");
-				@log = `svn log --stop-on-copy -qvr1:HEAD --limit 1 $repos_url/$txn_to_parent`;
+				my @log = `svn log --stop-on-copy -qvr1:HEAD --limit 1 $repos_url/$txn_to_parent`;
 				#$common->msg_debug("@log");
 
-				for $log (@log)
+				for my $log (@log)
 				{
 					chomp($log);
 					if ($log ~~ /   [A] (.+) \(from (.+):([0-9]+)\)/)
 					{
-						#$log_to_path = $1;
-						($log_from_path = $2) =~ s(^/)();
-						#$log_from_rev = $3;
+						#my $log_to_path = $1;
+						(my $log_from_path = $2) =~ s(^/)();
+						#my $log_from_rev = $3;
 
 						#$common->msg_debug("$log_from_path =? $txn_from_path");
 						if ($prevent_double_copying
@@ -562,32 +569,32 @@ if ($prevent_double_copying
 ### Perform checks on file differences
 if ($enable_line_checks)
 {
-	@diffs = `svnlook diff -t $txn $repos --no-diff-deleted --diff-copy-from`;
-	$fileaction = ();
-	$filepath = ();
-	$line_num = 0;
+	my @diffs = `svnlook diff -t $txn $repos --no-diff-deleted --diff-copy-from`;
+	my $fileaction = ();
+	my $filepath = ();
+	my $line_num = 0;
 	#print STDERR @diffs;
-	%patterns = ();
-	foreach $diff (@diffs)
+	my %patterns = ();
+	foreach my $diff (@diffs)
 	{
 		chomp($diff);
-		$line_inc = 1;
+		my $line_inc = 1;
 		if ($diff ~~ /^(Added|Modified|Deleted): (.*)$/)
 		{
 			$fileaction = $1;
 			$filepath = $2;
 
-			($filebase, $filedir, $fileext) = fileparse ($filepath);
-			$filename = $filebase . $fileext;
-			#$is_directory = ($filename eq "");
+			(my $filebase, my $filedir, my $fileext) = fileparse ($filepath);
+			my $filename = $filebase . $fileext;
+			#my $is_directory = ($filename eq "");
 
 			### pre-select the sub-collection of patterns to apply
 			%patterns = ();
-			while(($glob, $pattern_strs) = each(%line_config))
+			while((my $glob, my $pattern_strs) = each(%line_config))
 			{
 				if ($filename ~~ glob_to_regex($glob))
 				{
-					while(($pattern_str, $entry) = each(%{$pattern_strs}))
+					while((my $pattern_str, my $entry) = each(%{$pattern_strs}))
 					{
 						$patterns{$pattern_str} = $entry;
 					}
@@ -601,10 +608,10 @@ if ($enable_line_checks)
 		}
 		elsif ($diff ~~ /^@@ -([0-9]+)(?:,([0-9]+))? \+([0-9]+)(?:,([0-9]+))? @@$/)
 		{
-			#$old_pos = common::default_int ($1,0);
-			#$old_len = common::default_int ($2,1);
-			$new_pos = common::default_int ($3,0);
-			#$new_len = common::default_int ($4,1);
+			#my $old_pos = common::default_int ($1,0);
+			#my $old_len = common::default_int ($2,1);
+			my $new_pos = common::default_int ($3,0);
+			#my $new_len = common::default_int ($4,1);
 
 			#$common->msg_debug("$diff");
 			#$common->msg_debug("@ $old_pos,$old_len $new_pos,$new_len");
@@ -613,8 +620,8 @@ if ($enable_line_checks)
 		}
 		elsif ($diff ~~ /^([-+])([^+].*)$/)
 		{
-			$lineaction = $1;
-			$line = $2;
+			my $lineaction = $1;
+			my $line = $2;
 			chomp ($line);
 			if ($lineaction eq "-")
 			{
@@ -626,10 +633,10 @@ if ($enable_line_checks)
 				if ($fileaction ~~ /^(Added|Modified)$/)
 				{
 					### check this line against our rules
-					while(($pattern_str, $entry) = each(%patterns))
+					while((my $pattern_str, my $entry) = each(%patterns))
 					{
-						$desc = @{$entry}[0];
-						$pattern = @{$entry}[1];
+						my $desc = @{$entry}[0];
+						my $pattern = @{$entry}[1];
 						if ($line ~~ $pattern)
 						{
 							$common->msg_caught("<$filepath($line_num)> matches prohibited \"$desc\".", $return); ### " /$pattern_str/"

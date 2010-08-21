@@ -37,26 +37,28 @@
 ###
 ###############################################################################
 
+use strict;
+
 ### Parameters
 
-$repos = $ARGV[0];
-$revision = $ARGV[1];
+my $repos = $ARGV[0];
+my $revision = $ARGV[1];
 
 ### Options
 
-$create_revision_dump = 1;
-#$send_email = 0; ### NOT IMPLEMENTED
+my $create_revision_dump = 1;
+#my $send_email = 0; ### NOT IMPLEMENTED
 
 ### Variables
 
 ### No result
 
-#$return = 0;
+my $return = 0; ### (only declared because strict)
 
 ### ===========================================================================
 ### Class
 
-$common = common->spawn("post-commit", $repos);
+my $common = common->spawn("post-commit", $repos);
 
 $common->msg_now_banner(0);
 $common->msg_info_log_only("rev=$revision");
@@ -81,7 +83,7 @@ use subroutine::common;
 ### ===========================================================================
 ### Get the repository information
 
-#$youngest = `svnlook youngest $repos`;
+#my $youngest = `svnlook youngest $repos`;
 
 ### ---------------------------------------------------------------------------
 ### Other...
@@ -97,19 +99,19 @@ use subroutine::common;
 if ($create_revision_dump)
 {
 	#$common->msg_debug("repos = ${repos}");
-	($reposbase, $reposdir, $reposext) = fileparse ($repos);
-	$reposname = $reposbase . $reposext;
+	(my $reposbase, my $reposdir, my $reposext) = fileparse ($repos);
+	my $reposname = $reposbase . $reposext;
 
-	$repos_bak = "$repos/../../svn-bak/${reposname}-bak/dump/";
+	my $repos_bak = "$repos/../../svn-bak/${reposname}-bak/dump/";
 	$repos_bak = File::Spec->canonpath ($repos_bak);
 	#$common->msg_debug("repos-bak = ${repos_bak}");
 
-	#($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = gmtime(time);
-	#$now = sprintf ("%4d-%02d-%02dT%02d:%02d:%02dZ", $year+1900,$mon+1,$mday,$hour,$min,$sec);
+	#(my $sec, my $min, my $hour, my $mday, my $mon, my $year, my $wday, my $yday, my $isdst) = gmtime(time);
+	#my $now = sprintf ("%4d-%02d-%02dT%02d:%02d:%02dZ", $year+1900,$mon+1,$mday,$hour,$min,$sec);
 	#$common->msg_debug("$now");
 
-	$prefix = common::safe_name ("r${revision}");
-	$suffix = ".dat";
+	my $prefix = common::safe_name ("r${revision}");
+	my $suffix = ".dat";
 	
 	if ( ! -e $repos_bak )
 	{

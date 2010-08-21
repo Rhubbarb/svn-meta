@@ -37,33 +37,35 @@
 ###
 ###############################################################################
 
+use strict;
+
 ### Parameters
 
-$repos = $ARGV[0];
-$revision = $ARGV[1];
-$user = $ARGV[2];
-$propname = $ARGV[3];
-$action = $ARGV[4]; ### 'A'dded, 'M'odified, or 'D'eleted
-$new_value = <STDIN>;
+my $repos = $ARGV[0];
+my $revision = $ARGV[1];
+my $user = $ARGV[2];
+my $propname = $ARGV[3];
+my $action = $ARGV[4]; ### 'A'dded, 'M'odified, or 'D'eleted
+my $new_value = <STDIN>;
 
 ### Options
 
-$allow_property_changes = 1; ### prefer not to have script than set this to 0
+my $allow_property_changes = 1; ### prefer not to have script than set this to 0
 
-$allow_only_log_modification = 1;
-$backup_values = 1;
+my $allow_only_log_modification = 1;
+my $backup_values = 1;
 
 ### Variables
 
 ### Result
 
-$return = ($allow_property_changes ? 0 : 1);
+my $return = ($allow_property_changes ? 0 : 1);
 #$return = 2; ### test value
 
 ### ===========================================================================
 ### Class
 
-$common = common->spawn("pre-revprop-change", $repos);
+my $common = common->spawn("pre-revprop-change", $repos);
 
 $common->msg_now_banner(0);
 $common->msg_info_log_only("rev=$revision, user=$user, prop=$propname, action=$action");
@@ -97,7 +99,7 @@ use subroutine::common;
 
 if ($allow_only_log_modification)
 {
-	$is_standard = (substr($propname,0,4) eq "svn:");
+	my $is_standard = (substr($propname,0,4) eq "svn:");
 	
 	if ($propname ne "svn:log" && $is_standard)
 	{
@@ -118,22 +120,22 @@ if ($allow_only_log_modification)
 if ($backup_values && ($return == 0 or $return == 2))
 {
 	#$common->msg_debug("repos = ${repos}");
-	($reposbase, $reposdir, $reposext) = fileparse ($repos);
-	$reposname = $reposbase . $reposext;
+	(my $reposbase, my $reposdir, my $reposext) = fileparse ($repos);
+	my $reposname = $reposbase . $reposext;
 
-	$repos_bak = "$repos/../../svn-bak/${reposname}-bak/prop/";
+	my $repos_bak = "$repos/../../svn-bak/${reposname}-bak/prop/";
 	$repos_bak = File::Spec->canonpath ($repos_bak);
 	#$common->msg_debug("repos-bak = ${repos_bak}");
 
-	($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = gmtime(time);
-	$now = sprintf ("%4d-%02d-%02dT%02d:%02d:%02dZ", $year+1900,$mon+1,$mday,$hour,$min,$sec);
+	(my $sec,my $min,my $hour,my $mday,my $mon,my $year,my $wday,my $yday,my $isdst) = gmtime(time);
+	my $now = sprintf ("%4d-%02d-%02dT%02d:%02d:%02dZ", $year+1900,$mon+1,$mday,$hour,$min,$sec);
 	#$common->msg_debug("$now");
 
-	$prefix = common::safe_name ("r${revision}|prop-${propname}|${now}|${action}|${user}|");
-	$suffix = ".dat";
+	my $prefix = common::safe_name ("r${revision}|prop-${propname}|${now}|${action}|${user}|");
+	my $suffix = ".dat";
 	
 	### get the property value
-	$old_value = `svnlook propget -r $revision --revprop $repos $propname`;
+	my $old_value = `svnlook propget -r $revision --revprop $repos $propname`;
 
 	#$common->msg_debug("old value: $old_value");
 	#$common->msg_debug("new value: $new_value");

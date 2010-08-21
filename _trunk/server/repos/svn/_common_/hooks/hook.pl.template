@@ -37,11 +37,13 @@
 ###
 ###############################################################################
 
+use strict;
+
 #subroutine::common::msg_now_banner();
 
 ### Parameters
 
-$repos = $ARGV[0];
+my $repos = $ARGV[0];
 #...
 
 ### Options
@@ -50,7 +52,7 @@ $repos = $ARGV[0];
 
 ### Result
 
-$return = 0;
+my $return = 0;
 
 ### ===========================================================================
 ### Modules to use
@@ -65,7 +67,7 @@ $return = 0;
 ### ===========================================================================
 ### Get the repository information
 
-$youngest = `svnlook youngest $repos`;
+my $youngest = `svnlook youngest $repos`;
 
 ### ---------------------------------------------------------------------------
 ### Other...
@@ -78,7 +80,7 @@ $youngest = `svnlook youngest $repos`;
 
 if (1)
 {
-	foreach $thing (@things)
+	foreach my $thing (@things)
 	{
 		chomp($thing);
 		#subroutine::common::msg_debug("thing: $thing");

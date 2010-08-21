@@ -37,11 +37,13 @@
 ###
 ###############################################################################
 
+use strict;
+
 ### Parameters
 
-$repos = $ARGV[0];
-$user = $ARGV[1];
-$capabilities = $ARGV[2];
+my $repos = $ARGV[0];
+my $user = $ARGV[1];
+my $capabilities = $ARGV[2];
 
 ### Options
 
@@ -49,12 +51,12 @@ $capabilities = $ARGV[2];
 
 ### Result
 
-$return = 0;
+my $return = 0;
 
 ### ===========================================================================
 ### Class
 
-$common = common->spawn("start-commit", $repos);
+my $common = common->spawn("start-commit", $repos);
 
 $common->msg_now_banner(0);
 $common->msg_info_log_only("user=$user");
@@ -72,12 +74,12 @@ use subroutine::common;
 ### ===========================================================================
 ### Get the repository information
 
-$youngest = `svnlook youngest $repos`;
+my $youngest = `svnlook youngest $repos`;
 
 ### ---------------------------------------------------------------------------
 ### Split the capability information
 
-@capabilities = split(/:/, $capabilities);
+my @capabilities = split(/:/, $capabilities);
 
 ### ===========================================================================
 ### Start
@@ -89,9 +91,9 @@ $youngest = `svnlook youngest $repos`;
 
 if (1) ### mandatory for any SVN 1.5+ repository and server
 {
-	$mergeinfo_capable = 0; ### false
+	my $mergeinfo_capable = 0; ### false
 
-	foreach $capability (@capabilities)
+	foreach my $capability (@capabilities)
 	{
 		chomp($capability);
 		$common->msg_debug("capability: $capability");

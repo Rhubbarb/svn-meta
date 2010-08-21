@@ -45,7 +45,7 @@ $revision = $ARGV[1];
 ### Options
 
 $create_revision_dump = 1;
-#$send_mail = 0; ### NOT IMPLEMENTED
+#$send_email = 0; ### NOT IMPLEMENTED
 
 ### Variables
 

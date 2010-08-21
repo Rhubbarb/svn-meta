@@ -58,7 +58,7 @@
 ### Specify the start of a filename with a slash (/)
 ### Specify the end of a path with a dollar ($)
 
-### Example equivalence:
+### Example equivalence (approximate):
 ### g<*.c *.h *.cpp *.hpp> = re</.*\.(c|h|cpp|hpp)$>
 
 ###############################################################################

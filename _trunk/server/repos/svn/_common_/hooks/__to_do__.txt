@@ -1,6 +1,6 @@
 
-verify script
-hot-copy script
+*** verify script
+*** hot-copy script
 schedule setup scripts (Windows sc?; Linux cron?)
 
 version control all the scripts
@@ -20,3 +20,5 @@ check for final empty line in file
 
 bash-style hook wrappers
 bash-style prepare_environment.sh
+
+pre-commit : check for correctness of position svn:mergeinfo information - how?

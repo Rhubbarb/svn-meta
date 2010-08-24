@@ -110,6 +110,12 @@
 ### Rob's global ignores
 ### [!a-zA-Z0-9_] is used for a space
 global-ignores =
+	*[!a-zA-Z0-9_]-[!a-zA-Z0-9_]Copy
+	*[!a-zA-Z0-9_]-[!a-zA-Z0-9_]Copy.*
+	*[!a-zA-Z0-9_]-[!a-zA-Z0-9_]Copy[!a-zA-Z0-9_]([1-9][0-9])
+	*[!a-zA-Z0-9_]-[!a-zA-Z0-9_]Copy[!a-zA-Z0-9_]([1-9][0-9]).*
+	*[!a-zA-Z0-9_]-[!a-zA-Z0-9_]Copy[!a-zA-Z0-9_]([2-9])
+	*[!a-zA-Z0-9_]-[!a-zA-Z0-9_]Copy[!a-zA-Z0-9_]([2-9]).*
 	*##
 	*##.*
 	*.7z
@@ -147,37 +153,31 @@ global-ignores =
 	*.user
 	*.vspscc
 	*.zip
-	*[!a-zA-Z0-9_]-[!a-zA-Z0-9_]Copy
-	*[!a-zA-Z0-9_]-[!a-zA-Z0-9_]Copy.*
-	*[!a-zA-Z0-9_]-[!a-zA-Z0-9_]Copy[!a-zA-Z0-9_]([1-9][0-9])
-	*[!a-zA-Z0-9_]-[!a-zA-Z0-9_]Copy[!a-zA-Z0-9_]([1-9][0-9]).*
-	*[!a-zA-Z0-9_]-[!a-zA-Z0-9_]Copy[!a-zA-Z0-9_]([2-9])
-	*[!a-zA-Z0-9_]-[!a-zA-Z0-9_]Copy[!a-zA-Z0-9_]([2-9]).*
 	*~
+	.~lock.*.o??#
+	_UpgradeReport_Files
+	~*.doc
+	bin
+	build
 	BuildLog.htm
 	Copy[!a-zA-Z0-9_]([1-9][0-9])[!a-zA-Z0-9_]of[!a-zA-Z0-9_]*
 	Copy[!a-zA-Z0-9_]([2-9])[!a-zA-Z0-9_]of[!a-zA-Z0-9_]*
 	Copy[!a-zA-Z0-9_]of[!a-zA-Z0-9_]*
+	[Dd]ebug
+	[Dd]ebug[Uu]
+	dist
+	lib
+	obj
+	out
 	Output-Build.txt
 	RC[ab][0-9][0-9][0-9][0-9][0-9]
+	[Rr]elease
+	[Rr]elease[Uu]
 	SciTE.*.session
 	SciTE.session
 	Thumbs.db
 	UpgradeLog.XML
 	UpgradeReport*.*
-	[Dd]ebug
-	[Dd]ebug[Uu]
-	[Rr]elease
-	[Rr]elease[Uu]
-	_UpgradeReport_Files
-	bin
-	build
-	dist
-	lib
-	obj
-	out
-	~*.doc
-	.~lock.*.o??#
 
 ### Set log-encoding to the default encoding for log messages
 # log-encoding = latin1

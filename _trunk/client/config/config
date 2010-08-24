@@ -164,6 +164,7 @@ global-ignores =
 	obj
 	out
 	~*.doc
+	.~lock.*.o??#
 
 ### Set log-encoding to the default encoding for log messages
 # log-encoding = latin1

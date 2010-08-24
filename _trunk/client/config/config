@@ -1,3 +1,16 @@
+###############################################################################
+###
+### Subversion Client Configuration File
+### ------------------------------------
+###
+### $URL$
+### $Rev$
+###
+### Rob Hubbard's edited "sample" version of the config file
+### (branched from vendor drop)
+###
+###############################################################################
+
 ### This file configures various client-side behaviors.
 ###
 ### The commented-out examples below are intended to demonstrate

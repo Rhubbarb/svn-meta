@@ -73,9 +73,9 @@
   + g<*.bat>
   + g<*.txt>
   + g<*.reg>
-  + re</.*\.(dsp|dsw|vcproj|sln|vsprops)>
-  + re</.*\.(html|js|php|java|jsp)>
-  + re</.*\.(xml|css|xsl|xsd)>
+  + re</.*\.(dsp|dsw|vcproj|sln|vsprops)$>
+  + re</.*\.(html|js|php|java|jsp)$>
+  + re</.*\.(xml|css|xsl|xsd)$>
 
 ### catch-all: exclude everything else
   - re<.*>

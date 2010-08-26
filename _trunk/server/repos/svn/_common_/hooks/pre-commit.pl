@@ -83,6 +83,11 @@ use Text::Glob qw( match_glob glob_to_regex glob_to_regex_string );
 #use XML::Simple;
 
 ### ---------------------------------------------------------------------------
+### 'Constants'
+
+my $devnull = File::Spec->devnull();
+
+### ---------------------------------------------------------------------------
 ### Function definitions
 
 use subroutine::common;
@@ -178,7 +183,7 @@ if ($enable_path_checks)
 				my @globs = split(/\s+/,$2);
 				for my $glob (@globs)
 				{
-					my $pattern_str = "/" . glob_to_regex_string($glob);
+					my $pattern_str = "/" . glob_to_regex_string($glob) . "\$";
 					#$common->msg_debug(">>> g<$glob> = re<$pattern_str>");
 					push (@filename_config, [qr($pattern_str), $allowed]);
 				}
@@ -367,41 +372,54 @@ if ($enable_path_checks or $enable_property_checks
 			)
 		{
 			### check that the new file may be added (extension or pattern)
+			my $path_allowed = 1;
 			if ($enable_path_checks)
 			{
-				my $allowed = 1;
 				foreach my $entry (@filename_config)
 				{
 					my $pattern = $entry->[0];
-					my $allowed = $entry->[1];
+					$path_allowed = $entry->[1];
 
 					if ("/".$filepath ~~ $pattern)
 					{
+						#$common->msg_debug(">>> path-check match: $filepath ~~ $pattern");
 						last;
 					}
 				}
-				unless ($allowed)
+				unless ($path_allowed)
 				{
 					$common->msg_caught("<$filepath> blocked.", $return);
 				}
 			}
 
-			if ($enable_property_checks)
+			if ($path_allowed && $enable_property_checks)
 			{
+				my @props_actual = `svnlook proplist -t $txn $repos $filepath`;
+				my %props_actual = map { common::trim($_) => 0 } @props_actual;
+
 				while((my $glob, my $props) = each(%property_config))
 				{
 					if ($filename ~~ glob_to_regex($glob))
 					{
 						while((my $prop_name, my $entry) = each(%{$props}))
 						{
-							my $prop_value_actual = `svnlook propget -t $txn $repos $prop_name $filepath 2> nul`;
-							my $exists = not $?;
+							my $exists = exists $props_actual{$prop_name};
+
+							my $prop_value_actual
+									= $exists
+									? `svnlook propget -t $txn $repos $prop_name $filepath` # 2> $devnull
+									: ();
+							#my $exists = not $?;
 							special_filter ($prop_name, \$prop_value_actual);
 
 							my $prop_value_specified = $entry->[2];
 							special_filter ($prop_name, \$prop_value_specified);
 							my $required = $entry->[0];
 							my $prohibited = $entry->[1];
+
+							#$common->msg_debug(">>> fn=$filename [$glob] prop=$prop_name (exists=$exists)");
+							#$common->msg_debug("  > spec=$required/$prohibited $prop_value_specified");
+							#$common->msg_debug("  > actual=$prop_value_actual");
 
 							if ($exists)
 							{
@@ -421,10 +439,18 @@ if ($enable_path_checks or $enable_property_checks
 							{
 								if ($required)
 								{
-									$common->msg_caught("<$filepath> prop $prop_name=$prop_value_specified required for <$glob>.", $return);
+									if ($prop_value_specified)
+									{
+										$common->msg_caught("<$filepath> prop $prop_name=$prop_value_specified required for <$glob>.", $return);
+									}
+									else
+									{
+										$common->msg_caught("<$filepath> prop $prop_name required for <$glob>.", $return);
+									}
 								}
 							}
 						}
+						#$common->msg_debug(">>> prop-check match: $filepath ~~ $glob");
 						last; ### consider only the first filename glob match
 					}
 				}
@@ -467,7 +493,7 @@ if ($enable_path_checks or $enable_property_checks
 				{
 					(my $txn_parent = $filepath) =~ s(/[^/]+/?$)();
 					#$common->msg_debug("parent = $repos_url/$txn_parent");
-					my @log = `svn log --stop-on-copy -qvr1:HEAD --limit 1 $repos_url/$txn_parent 2> nul`;
+					my @log = `svn log --stop-on-copy -qvr1:HEAD --limit 1 $repos_url/$txn_parent 2> $devnull`;
 					my $log_error = $?;
 					#$common->msg_debug("err = $log_error");
 					if ($log_error)

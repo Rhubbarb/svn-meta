@@ -493,7 +493,7 @@ if ($enable_path_checks or $enable_property_checks
 				{
 					(my $txn_parent = $filepath) =~ s(/[^/]+/?$)();
 					#$common->msg_debug("parent = $repos_url/$txn_parent");
-					my @log = `svn log --stop-on-copy -qvr1:HEAD --limit 1 $repos_url/$txn_parent 2> $devnull`;
+					my @log = `svn log --stop-on-copy -qvr1:HEAD --limit 1 $repos_url/$txn_parent`;
 					my $log_error = $?;
 					#$common->msg_debug("err = $log_error");
 					if ($log_error)

@@ -265,22 +265,23 @@ sub msg_debug ($$) ### ($self, $text)
 	$self->msg_print ("[DEBUG: $text]") if ($debugging_enabled);
 }
 
-sub msg_now_banner($$$) ### ($self, $end, $return)
+sub msg_now_banner($$$) ### ($self, $finish, $return)
 {
 	my $self = shift;
-	my $end = shift;
+	my $finish = shift;
 
 	my $now = now();
 
 	(my $repos_base = $common::repos) =~ s(^.*[\/\\])();
-	my $label = ($end ? "" : "$self->{repos_base} $self->{hook} ") . "$now";
+	my $label = ($finish ? "" : "$self->{repos_base} $self->{hook} ") . "$now";
 	my $len = length($label);
 	my $to_pad = 79 - 2 - $len;
 	my $left = int ($to_pad / 2);
 	my $right = $to_pad - $left;
 	#print STDERR "$len, $to_pad, $left, $right\n";
-	my $ch = ($end ? "-" : "-");
-	$self->msg_print (($end ? "" : "\n") . ($ch x $left) . " $label " . ($ch x $right));
+	my $lch = ($finish ? ' ' : '-');
+	my $rch = ($finish ? '' : '-');
+	$self->msg_print (($finish ? "" : "\n") . ($lch x $left) . " $label " . ($rch x $right));
 }
 
 sub msg_exit_code ($$) ### ($self, $return)

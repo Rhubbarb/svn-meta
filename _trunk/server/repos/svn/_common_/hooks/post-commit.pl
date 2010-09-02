@@ -106,11 +106,10 @@ if ($create_revision_dump)
 	$repos_bak = File::Spec->canonpath ($repos_bak);
 	#$common->msg_debug("repos-bak = ${repos_bak}");
 
-	#(my $sec, my $min, my $hour, my $mday, my $mon, my $year, my $wday, my $yday, my $isdst) = gmtime(time);
-	#my $now = sprintf ("%4d-%02d-%02dT%02d:%02d:%02dZ", $year+1900,$mon+1,$mday,$hour,$min,$sec);
+	#my $now = common::today_now();
 	#$common->msg_debug("$now");
 
-	my $prefix = common::safe_name ("r${revision}");
+	my $prefix = common::safe_file_name ("r${revision}");
 	my $suffix = ".dat";
 
 	if ( ! -e $repos_bak )

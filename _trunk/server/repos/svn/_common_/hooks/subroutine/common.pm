@@ -41,8 +41,12 @@ use strict;
 
 package common;
 
+### Options
+
 my $logging_enabled = 1;
 my $debugging_enabled = 0;
+
+### Variables
 
 ### ===========================================================================
 # Declarations of Functions
@@ -53,6 +57,14 @@ sub trim ($); ### ($string)
 sub default_int ($$); ### ($str, $default)
 
 sub safe_name ($); ### ($fn)
+
+sub today_now_iso8601_utc ();
+sub today_iso8601_utc ();
+sub now_iso8601_utc ();
+
+sub today_now ();
+sub today ();
+sub now ();
 
 ### ===========================================================================
 # Declarations of Methods
@@ -125,6 +137,58 @@ sub safe_name ($) ### ($fn)
 	$fn =~ s/[^-_.,!+=@#a-zA-Z0-9]//g;
 
 	return $fn;
+}
+
+sub today_now_iso8601_utc ()
+{
+	my $year, my $mon, my $mday;
+	my $sec, my $min, my $hour;
+	my $wday, my $yday, my $isdst; ### unused
+	### UTC
+	($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = gmtime(time);
+	### ISO 8601
+	my $today_now = sprintf ("%4d-%02d-%02dT%02d:%02d:%02dZ",
+		$year+1900,$mon+1,$mday, $hour,$min,$sec);
+	return $today_now;
+}
+
+sub today_iso8601_utc ()
+{
+	my $year, my $mon, my $mday;
+	my $sec, my $min, my $hour; ### unused
+	my $wday, my $yday, my $isdst; ### unused
+	### UTC
+	($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = gmtime(time);
+	### ISO 8601
+	my $today = sprintf ("%4d-%02d-%02d", $year+1900,$mon+1,$mday);
+	return $today;
+}
+
+sub now_iso8601_utc ()
+{
+	my $year, my $mon, my $mday; ### unused
+	my $sec, my $min, my $hour;
+	my $wday, my $yday, my $isdst; ### unused
+	### UTC
+	($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = gmtime(time);
+	### ISO 8601
+	my $now = sprintf ("%02d:%02d:%02dZ", $hour,$min,$sec);
+	return $now;
+}
+
+sub today_now ()
+{
+	return today_now_iso8601_utc ();
+}
+
+sub today ()
+{
+	return today_iso8601_utc ();
+}
+
+sub now ()
+{
+	return now_iso8601_utc ();
 }
 
 ### ===========================================================================
@@ -206,19 +270,16 @@ sub msg_now_banner($$$) ### ($self, $end, $return)
 	my $self = shift;
 	my $end = shift;
 
-	my $sec, my $min, my $hour;
-	my $mday, my $mon, my $year, my $wday, my $yday, my $isdst; 
-	($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = gmtime(time);
-	my $now = sprintf ("%4d-%02d-%02dT%02d:%02d:%02dZ", $year+1900,$mon+1,$mday,$hour,$min,$sec);
+	my $now = now();
 
 	(my $repos_base = $common::repos) =~ s(^.*[\/\\])();
-	my $label = ($end ? "finish" : "$self->{repos_base} $self->{hook} start") . " $now";
+	my $label = ($end ? "" : "$self->{repos_base} $self->{hook} ") . "$now";
 	my $len = length($label);
 	my $to_pad = 79 - 2 - $len;
 	my $left = int ($to_pad / 2);
 	my $right = $to_pad - $left;
 	#print STDERR "$len, $to_pad, $left, $right\n";
-	my $ch = ($end ? "_" : "^");
+	my $ch = ($end ? "-" : "-");
 	$self->msg_print (($end ? "" : "\n") . ($ch x $left) . " $label " . ($ch x $right));
 }
 

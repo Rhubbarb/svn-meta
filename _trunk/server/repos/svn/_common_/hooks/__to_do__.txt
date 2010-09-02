@@ -27,3 +27,21 @@ check properties of that file type after stripping one layer of extension.
 for extensionless files, implement a hash-bang check
 
 pre-commit : check for correctness of position svn:mergeinfo information - how?
+
+implement svn:property subset/superset/intersection configuration option:
+	+ mandatory = exact
+	+ mandatory <= non-empty subset (non-strict)
+	+ mandatory >= superset (non-strict)
+	+ mandatory ^= non-empty intersection (one or more alternatives)
+	= optional = exact
+	= optional <= subset (non-strict)
+	= optional >= superset (non-strict)
+	= optional ^= non-empty intersection (one or more alternatives)
+	- prohibited
+implement svn:property alternatives option
+	+ mandatory = single value
+	+ mandatory |= pipe-separated alternatives (one alternative only)
+
+?Implement duplication detection for globs?
+That would be nice in a script.
+This is hard, so might only be possible at run-time.

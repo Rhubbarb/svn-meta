@@ -1,11 +1,9 @@
 
+release/distribution script
+
 *** verify script
 *** hot-copy script
 schedule setup scripts (Windows sc?; Linux cron?)
-
-version control all the scripts
-
-update <config>
 
 repository structure setup script
 
@@ -18,15 +16,15 @@ implement conditions on deleted lines?
 check for final empty line in file
 (first line and last line conditions?)
 
-bash-style hook wrappers
-bash-style prepare_environment.sh
+bash-style hook wrappers [and test]
+bash-style prepare_environment.sh [and test]
 
 on property checks, define template extension ".tmpl";
 check properties of that file type after stripping one layer of extension.
 
-for extensionless files, implement a hash-bang check
+for extensionless files, implement a hash-bang check?
 
-pre-commit : check for correctness of position svn:mergeinfo information - how?
+pre-commit (of merge) : check for correctness of position svn:mergeinfo information - how?
 
 implement svn:property subset/superset/intersection configuration option:
 	+ mandatory = exact

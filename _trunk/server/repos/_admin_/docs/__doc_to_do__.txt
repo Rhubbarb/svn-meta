@@ -1,0 +1,9 @@
+
+additional goodies:
+	config
+	svnserve setup script
+	
+	? verify script
+	? verify scheduler
+	? hot-copy script
+	? hot-copy/backup scheduler

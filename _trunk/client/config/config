@@ -108,16 +108,16 @@
 #   *.rej *~ #*# .#* .*.swp .DS_Store
 
 ### Rob's global ignores
-### [!a-zA-Z0-9_] is used for a space
+### here, "[!a-zA-Z0-9_]" is used to approximate a space " "
 global-ignores =
+	*##
+	*##.*
 	*[!a-zA-Z0-9_]-[!a-zA-Z0-9_]Copy
 	*[!a-zA-Z0-9_]-[!a-zA-Z0-9_]Copy.*
 	*[!a-zA-Z0-9_]-[!a-zA-Z0-9_]Copy[!a-zA-Z0-9_]([1-9][0-9])
 	*[!a-zA-Z0-9_]-[!a-zA-Z0-9_]Copy[!a-zA-Z0-9_]([1-9][0-9]).*
 	*[!a-zA-Z0-9_]-[!a-zA-Z0-9_]Copy[!a-zA-Z0-9_]([2-9])
 	*[!a-zA-Z0-9_]-[!a-zA-Z0-9_]Copy[!a-zA-Z0-9_]([2-9]).*
-	*##
-	*##.*
 	*.7z
 	*.aps
 	*.bak
@@ -126,6 +126,7 @@ global-ignores =
 	*.class
 	*.dep
 	*.dll
+	*.dxx
 	*.exe
 	*.exe.*.manifest
 	*.exp
@@ -137,6 +138,7 @@ global-ignores =
 	*.lib
 	*.lnk
 	*.ncb
+	*.o
 	*.obj
 	*.old
 	*.opt

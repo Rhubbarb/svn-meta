@@ -56,7 +56,7 @@ sub trim ($); ### ($string)
 
 sub default_int ($$); ### ($str, $default)
 
-sub safe_name ($); ### ($fn)
+sub safe_file_name ($); ### ($fn)
 
 sub today_now_iso8601_utc ();
 sub today_iso8601_utc ();
@@ -104,7 +104,7 @@ sub default_int ($$)
 	return $value;
 }
 
-sub safe_name ($) ### ($fn)
+sub safe_file_name ($) ### ($fn)
 {
 	my $fn = shift; ### $_[0]
 

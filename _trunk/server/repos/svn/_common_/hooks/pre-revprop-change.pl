@@ -46,7 +46,8 @@ my $revision = $ARGV[1];
 my $user = $ARGV[2];
 my $propname = $ARGV[3];
 my $action = $ARGV[4]; ### 'A'dded, 'M'odified, or 'D'eleted
-my $new_value = <STDIN>;
+my @new_value = <STDIN>;
+my $new_value = join ('', @new_value);
 
 ### Options
 

@@ -45,6 +45,8 @@ use strict;
 
 my $repos = $ARGV[0];
 #...
+#my @value = <STDIN>;
+#my $value = join ('', @value);
 
 ### Options
 

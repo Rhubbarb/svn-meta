@@ -159,6 +159,11 @@ global-ignores =
 	.~lock.*.o??#
 	_UpgradeReport_Files
 	~*.doc
+	~*.docx
+	~*.ppt
+	~*.pptx
+	~*.xls
+	~*.xlsx
 	bin
 	build
 	BuildLog.htm

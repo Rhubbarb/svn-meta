@@ -8,6 +8,18 @@ schedule setup scripts (Windows sc?; Linux cron?)
 repository structure setup script
 
 implement conditions on deleted lines?
+implement regex implies regex for lines?
+
+implement existential lines?
+
+CLIENT_SIDE EDITING SCRIPTS?
+* e.g. find and/or apply line-checks
+
+Specify Formatting of errors for line checks?
+
+Show script durations?
+
+Post-commit empty message warning?
 
 ? check presence of keywords in files (in addition to properties)
 
@@ -43,3 +55,6 @@ implement svn:property alternatives option
 ?Implement duplication detection for globs?
 That would be nice in a script.
 This is hard, so might only be possible at run-time.
+
+<$check_message_nonempty>
+[This could be enhanced to be of a certain minimum length, or to contain certain mandatory words.]

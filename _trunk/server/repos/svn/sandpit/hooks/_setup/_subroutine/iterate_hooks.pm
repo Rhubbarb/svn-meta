@@ -46,13 +46,34 @@ package iterate_hooks;
 sub fn (\$)
 {
 	my $fn = shift;
-	$$fn .= ".bat" if $^O eq "MSWin32";
+	if ($^O eq "MSWin32")
+	{
+		$$fn .= ".bat";
+	}
+	elsif ($^O eq "linux")
+	{
+		### $$fn unchanged
+	}
+	else
+	{
+		die "Unsupported OS \"$^O\".\n";
+	}
 }
 sub tmpl_fn (\$)
 {
 	my $fn = shift;
-	$$fn .= ".bat" if $^O eq "MSWin32";
-	$$fn .= ".sh" if $^O eq "linux";
+	if ($^O eq "MSWin32")
+	{
+		$$fn .= ".bat";
+	}
+	elsif ($^O eq "linux")
+	{
+		$$fn .= ".sh";
+	}
+	else
+	{
+		die "Unsupported OS \"$^O\".\n";
+	}
 }
 
 sub iterate (\&) ### (callback)

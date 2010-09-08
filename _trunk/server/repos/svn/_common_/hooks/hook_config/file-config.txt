@@ -70,7 +70,7 @@
   + g<*.pl *.pm>
   + g<*.py>
   + g<*.sh>
-  + g<*.bat>
+  + g<*.bat *.vbs>
   + g<*.txt>
   + g<*.reg>
   + re</.*\.(dsp|dsw|vcproj|sln|vsprops)$>

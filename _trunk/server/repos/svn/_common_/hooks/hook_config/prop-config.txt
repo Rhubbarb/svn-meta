@@ -135,6 +135,13 @@
 		#+ svn:mime-type = application/bat
 		+ svn:mime-type = text/plain
 
+### VBScript
+	g<*.vbs>
+		+ svn:eol-style = CRLF
+		+ svn:executable
+		+ svn:keywords = Rev URL
+		+ svn:mime-type = text/plain
+
 ### plain text
 	g<*.txt>
 		+ svn:eol-style = native

@@ -6,8 +6,12 @@
 ### $URL$
 ### $Rev$
 ###
-### Rob Hubbard's edited "sample" version of the config file
+### Edited "sample" version of the config file
 ### (branched from vendor drop)
+###
+### This file accompanies Rob Hubbard's Subversion Configuration Suite
+###
+### @ 2010, Rob Hubbard, branched from SVN distribution vendor drop.
 ###
 ###############################################################################
 

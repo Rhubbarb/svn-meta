@@ -49,6 +49,11 @@ my $debugging_enabled = 0;
 ### Variables
 
 ### ===========================================================================
+### Modules to use
+
+use Time::HiRes qw(gettimeofday);
+
+### ===========================================================================
 # Declarations of Functions
 
 # Perl trim function to remove whitespace from the start and end of the string
@@ -207,6 +212,8 @@ sub spawn ($$) ### ($class, $hook, $repos)
 		'hook' => $hook,
 		'repos' => $repos,
 		'repos_base' => $repos_base,
+		'time_s' => 0,
+		'time_us' => 0,
 	};
 	bless ($self, $class);
 	return $self;
@@ -270,10 +277,32 @@ sub msg_now_banner($$$) ### ($self, $finish, $return)
 	my $self = shift;
 	my $finish = shift;
 
+	(my $epochseconds, my $microseconds) = gettimeofday;
+
+	my $duration_str = ();
+	unless ($finish)
+	{
+		$self->{'time_s'} = $epochseconds;
+		$self->{'time_us'} = $microseconds;
+	}
+	else ### if $finish
+	{
+		my $duration_us =
+			1_000_000 * ($epochseconds - $self->{'time_s'})
+			+ ($microseconds - $self->{'time_us'});
+
+		my $duration_ms = int ($duration_us / 1000);
+
+		$duration_str = sprintf ("%d.%03ds",
+				$duration_ms / 1000,
+				$duration_ms % 1000);
+	}
+
 	my $now = now();
 
 	(my $repos_base = $common::repos) =~ s(^.*[\/\\])();
-	my $label = ($finish ? "" : "$self->{repos_base} $self->{hook} ") . "$now";
+	my $label = ($finish ? "" : "$self->{repos_base} $self->{hook} ") . "$now"
+			. ($finish ? " ($duration_str)" : "");
 	my $len = length($label);
 	my $to_pad = 79 - 2 - $len;
 	my $left = int ($to_pad / 2);

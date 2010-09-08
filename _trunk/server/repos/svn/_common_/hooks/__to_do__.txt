@@ -17,8 +17,6 @@ CLIENT_SIDE EDITING SCRIPTS?
 
 Specify Formatting of errors for line checks?
 
-Show script durations?
-
 Post-commit empty message warning?
 
 ? check presence of keywords in files (in addition to properties)

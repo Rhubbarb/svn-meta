@@ -56,3 +56,23 @@ This is hard, so might only be possible at run-time.
 
 <$check_message_nonempty>
 [This could be enhanced to be of a certain minimum length, or to contain certain mandatory words.]
+
+implement a branch obsoleting mechanism?
+
+external options file
+e.g.
+	[pre-commit]
+		check-message-nonempty = 1;
+		check-author-and-date-present = 1;
+		enable-path-checks = 1;
+		enable-property-checks = 1;
+		enable-line-checks = 1;
+		prevent-double-copying = 1;
+		enable-tag-protection = 1;
+		prevent-copy-from-tag = 1;
+		tagarea = "_tags";
+
+external options file(s)
+	(templated)
+	per-repos configuration options
+	per-repos configuration files

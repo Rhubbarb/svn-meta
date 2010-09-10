@@ -118,7 +118,10 @@ if ($create_revision_dump)
 	}
 
 	### write the dumpdata
-	`svnadmin dump $repos --incremental -r $revision > "${repos_bak}/${prefix}${suffix}"`;
+	#`svnadmin dump $repos --incremental -r $revision > "${repos_bak}/${prefix}${suffix}"`;
+	### why doesn't that work reliably??
+	my $dump = `svnadmin dump $repos --incremental -r $revision`;
+	$common->write_value ( "${repos_bak}/${prefix}${suffix}", $dump, $return );
 }
 
 ### ---------------------------------------------------------------------------

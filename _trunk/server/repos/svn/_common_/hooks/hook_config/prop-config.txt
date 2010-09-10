@@ -41,7 +41,7 @@
 
 ### The rules are applied to any file scheduled for addition (without history).
 
-### The rules are only for versioned properies.
+### The rules are only for versioned properties.
 
 ###############################################################################
 

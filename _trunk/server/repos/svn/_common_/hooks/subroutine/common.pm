@@ -453,8 +453,8 @@ sub msg_now_banner($$$) ### ($self, $finish, $return)
 	my $now = now();
 
 	(my $repos_base = $common::repos) =~ s(^.*[\/\\])();
-	my $label = ($finish ? "" : "$self->{repos_base} $self->{hook} ") . "$now"
-			. ($finish ? " ($duration_str)" : "");
+	my $label = ($finish ? "--- " : "$self->{repos_base} $self->{hook} ") . "$now"
+			. ($finish ? " ($duration_str) ---" : "");
 	my $len = length($label);
 	my $to_pad = 79 - 2 - $len;
 	my $left = int ($to_pad / 2);

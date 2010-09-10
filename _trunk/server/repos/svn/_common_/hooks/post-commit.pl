@@ -44,13 +44,6 @@ use strict;
 my $repos = $ARGV[0];
 my $revision = $ARGV[1];
 
-### Options
-
-my $create_revision_dump = 1;
-#my $send_email = 0; ### NOT IMPLEMENTED
-
-### Variables
-
 ### No result
 
 my $return = 0; ### (only declared because strict)
@@ -59,9 +52,20 @@ my $return = 0; ### (only declared because strict)
 ### Class
 
 my $common = common->spawn("post-commit", $repos);
-
 $common->msg_now_banner(0);
 $common->msg_info_log_only("rev=$revision");
+
+$common->load_options($return);
+
+### Options
+
+	my $create_revision_dump = $common->get_config_option
+	  ('create_revision_dump', 1, $return);
+
+	#my $send_email = $common->get_config_option
+	#  ('send_email', 0, $return); ### NOT IMPLEMENTED
+
+### Variables
 
 ### ===========================================================================
 ### Modules to use

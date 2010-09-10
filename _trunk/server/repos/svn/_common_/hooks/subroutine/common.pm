@@ -45,6 +45,7 @@ package common;
 
 my $logging_enabled = 1;
 my $debugging_enabled = 0;
+my $show_options = 0;
 
 ### Variables
 
@@ -52,6 +53,7 @@ my $debugging_enabled = 0;
 ### Modules to use
 
 use Time::HiRes qw(gettimeofday);
+#use Cwd;
 
 ### ===========================================================================
 # Declarations of Functions
@@ -76,9 +78,13 @@ sub now ();
 
 ### NB: prototypes not actually enforced for method calls
 
+sub load_options ($\$); ### ($self, \$return)
+sub get_config_option ($$$\$); ### ($self, $option_name, $default, \$return)
+
 sub msg_print ($$); ### ($self, $text)
 sub msg_info_log_only ($$); ### ($self, $text)
 sub msg_error ($$\$); ### ($self, $text, \$return)
+sub msg_info ($$); ### ($self, $text)
 sub msg_caught ($$\$); ### ($self, $text, \$return)
 sub msg_advice ($$); ### ($self, $text)
 sub msg_debug ($$); ### ($self, $text)
@@ -199,11 +205,12 @@ sub now ()
 ### ===========================================================================
 # Definitions of Methods
 
-sub spawn ($$) ### ($class, $hook, $repos)
+sub spawn ($$$) ### ($class, $hook, $repos)
 {
 	my $class = shift;
 	my $hook = shift;
 	my $repos = shift;
+	#my $return = \shift;
 
 	(my $repos_base = $repos) =~ s(^.*[\/\\])();
 
@@ -215,8 +222,145 @@ sub spawn ($$) ### ($class, $hook, $repos)
 		'time_s' => 0,
 		'time_us' => 0,
 	};
+
 	bless ($self, $class);
 	return $self;
+}
+
+sub load_options ($\$) ### ($self, \$return)
+{
+	my $self = shift;
+	my $return = \shift;
+
+	my $repos = $self->{repos_base};
+
+	my %global_options = ();
+	my %repos_options = ();
+
+	#my $cwd = cwd();
+	#$self->msg_print("cwd = $cwd");
+
+	### load global options
+	$self->_parse_options (\%global_options, "_common_", "./hook_config/options.txt", $return);
+
+	### load repository-specific options (these will take precedence)
+	$self->_parse_options (\%repos_options, $repos, "./../../$repos/hooks/_hook_config/options.txt", $return);
+
+	### merge these hashes
+	my %options = %global_options;
+	while ( (my $key, my $value) = each %repos_options )
+	{
+		$options{$key} = $value;
+	}
+
+	while ( (my $key, my $value) = each %options )
+	{
+		if ($show_options)
+		{
+			if (exists $global_options{$key})
+			{
+				if (exists $repos_options{$key})
+				{
+					$self->msg_print ("READ OPTION: {$key} = REPOS {$value} [overridden GLOBAL {$global_options{$key}}]");
+				}
+				else
+				{
+					$self->msg_print ("READ OPTION: {$key} = GLOBAL {$value}");
+				}
+			}
+			else
+			{
+				$self->msg_print ("READ OPTION: {$key} = REPOS {$value}");
+			}
+		}
+		$self->{'options'}->{$key} = $value;
+	}
+}
+
+## pseudo-private
+sub _parse_options ($$$$\$) ### ($self, \%options, $repos, $file_name, \$return)
+{
+	my $self = shift;
+	my $options = shift;
+	my $label = shift;
+	my $file_name = shift;
+	my $return = \shift;
+
+	my $hook = $self->{hook};
+	my $repos = $self->{repos_base};
+
+	if ( -e $file_name )
+	{
+		my $success = open (my $fh, "<", $file_name);
+
+		if ($success)
+		{
+			my @config_lines = <$fh>;
+			my $linenum = 0;
+			my $active = 0;
+			foreach my $line (@config_lines)
+			{
+				++ $linenum;
+				chomp ($line);
+				if ($line eq "" or $line ~~ /^\s+$/ or $line ~~ /^\s*\#/)
+				{
+					### ignore the line
+				}
+				elsif ($line ~~ /^\s*\[(.*)\]\s*$/) ### [section]
+				{
+					my $section = $1;
+					$active = ($section eq $hook);
+				}
+				elsif ($line ~~ /^\s*\$?([^=\s]*)\s*=\s*(.*[^;\s])[;\s]*(?:#.*)?$/)
+				{
+					if ($active)
+					{
+						my $option_name = $1;
+						my $value = eval ($2);
+
+						$options->{$option_name} = $value;
+					}
+				}
+				else
+				{
+					$self->msg_error("bad line $linenum in $label options file.", $return);
+				}
+			}
+			close ($fh);
+		}
+		else
+		{
+			$self->msg_error("failure to read $label options file $file_name.", $return);
+		}
+	}
+	else
+	{
+		$self->msg_info("no $label options file $file_name.");
+	}
+}
+
+sub get_config_option ($$$\$) ### ($self, $option_name, $default, \$return)
+{
+	my $self = shift;
+	my $option_name = shift;
+	my $default = shift;
+	my $return = \shift;
+
+	my $value;
+	if ( defined $self->{'options'}->{$option_name} )
+	{
+		$value = $self->{'options'}->{$option_name};
+	}
+	else
+	{
+		$value = $default;
+		if ($show_options)
+		{
+			$self->msg_print ("OPTION: {$option_name} = DEFAULT {$value}");
+		}
+	}
+
+	return $value;
 }
 
 sub msg_print ($$) ### ($self, $text)
@@ -244,6 +388,14 @@ sub msg_error ($$\$) ### ($self, $text, \$return)
 	
 	$self->msg_print ("ERROR: $text");
 	$$return = 1;
+}
+
+sub msg_info ($$) ### ($self, $text)
+{
+	my $self = shift;
+	my $text = shift;
+
+	$self->msg_print ("INFO: $text");
 }
 
 sub msg_caught ($$\$) ### ($self, $text, \$return)

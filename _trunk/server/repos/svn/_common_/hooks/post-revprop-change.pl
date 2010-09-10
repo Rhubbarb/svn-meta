@@ -49,12 +49,6 @@ my $action = $ARGV[4]; ### 'A'dded, 'M'odified, or 'D'eleted
 #my @old_value = <STDIN>;
 #my $old_value = join ('', @old_value);
 
-### Options
-
-my $create_revision_dump = 1;
-
-### Variables
-
 ### No result
 
 my $return = 0; ### (only declared because strict)
@@ -63,9 +57,17 @@ my $return = 0; ### (only declared because strict)
 ### Class
 
 my $common = common->spawn("post-revprop-change", $repos);
-
 $common->msg_now_banner(0);
 $common->msg_info_log_only("rev=$revision, user=$user, prop=$propname, action=$action");
+
+$common->load_options($return);
+
+### Options
+
+	my $create_revision_dump = $common->get_config_option
+	  ('create_revision_dump', 1, $return);
+
+### Variables
 
 ### ===========================================================================
 ### Modules to use

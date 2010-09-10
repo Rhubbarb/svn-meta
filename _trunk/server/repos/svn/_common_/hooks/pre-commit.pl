@@ -44,22 +44,6 @@ use strict;
 my $repos = $ARGV[0];
 my $txn = $ARGV[1];
 
-### Options
-
-my $check_message_nonempty = 1;
-my $check_author_and_date_present = 1;
-my $enable_path_checks = 1;
-my $enable_property_checks = 1;
-my $enable_line_checks = 1;
-my $prevent_double_copying = 1;
-my $enable_tag_protection = 1;
-my $prevent_copy_from_tag = 1;
-### per-user, per-directory access_control is achieved via ../conf/authz
-
-### Variables
-
-my $tagarea = "_tags";
-
 ### Result
 
 my $return = 0;
@@ -69,8 +53,42 @@ my $return = 0;
 ### Class
 
 my $common = common->spawn("pre-commit", $repos);
-
 $common->msg_now_banner(0);
+
+$common->load_options($return);
+
+### Options
+
+	my $check_message_nonempty = $common->get_config_option
+	  ('check_message_nonempty', 1, $return);
+
+	my $check_author_and_date_present = $common->get_config_option
+	  ('check_author_and_date_present', 1, $return);
+
+	my $enable_path_checks = $common->get_config_option
+	  ('enable_path_checks', 1, $return);
+
+	my $enable_property_checks = $common->get_config_option
+	  ('enable_property_checks', 1, $return);
+
+	my $enable_line_checks = $common->get_config_option
+	  ('enable_line_checks', 0, $return);
+
+	my $prevent_double_copying = $common->get_config_option
+	  ('prevent_double_copying', 0, $return);
+
+	my $enable_tag_protection = $common->get_config_option
+	  ('enable_tag_protection', 0, $return);
+
+	my $prevent_copy_from_tag = $common->get_config_option
+	  ('prevent_copy_from_tag', 0, $return);
+
+	### per-user, per-directory access_control is achieved via ../conf/authz
+
+### Variables
+
+	my $tagarea = $common->get_config_option
+	  ('tagarea', "tags", $return);
 
 ### ===========================================================================
 ### Modules to use

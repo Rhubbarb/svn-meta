@@ -45,21 +45,27 @@ my $repos = $ARGV[0];
 my $user = $ARGV[1];
 my $capabilities = $ARGV[2];
 
-### Options
-
-### Variables
-
 ### Result
 
 my $return = 0;
+#$return = 2; ### test value
 
 ### ===========================================================================
 ### Class
 
 my $common = common->spawn("start-commit", $repos);
-
 $common->msg_now_banner(0);
 $common->msg_info_log_only("user=$user");
+#$common->msg_debug("capabilities = $capabilities");
+
+#$common->load_options($return);
+
+### Options
+
+	#my $option_name = $common->get_config_option
+	#  ('option_name', default_value, $return);
+
+### Variables
 
 ### ===========================================================================
 ### Modules to use
@@ -83,8 +89,6 @@ my @capabilities = split(/:/, $capabilities);
 
 ### ===========================================================================
 ### Start
-
-#$common->msg_debug("capabilities = $capabilities");
 
 ### ---------------------------------------------------------------------------
 ### Check for required capabilities

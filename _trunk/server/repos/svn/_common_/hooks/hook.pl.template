@@ -39,8 +39,6 @@
 
 use strict;
 
-#subroutine::common::msg_now_banner();
-
 ### Parameters
 
 my $repos = $ARGV[0];
@@ -55,6 +53,24 @@ my $repos = $ARGV[0];
 ### Result
 
 my $return = 0;
+
+### ===========================================================================
+### Class
+
+my $common = common->spawn("start-commit", $repos);
+$common->msg_now_banner(0);
+#$common->msg_info_log_only("param=$param");
+#$common->msg_debug("param = $param");
+
+
+#$common->load_options($return);
+
+### Options
+
+	#my $option_name = $common->get_config_option
+	#  ('option_name', default_value, $return);
+
+### Variables
 
 ### ===========================================================================
 ### Modules to use
@@ -97,6 +113,6 @@ if (1)
 ### ===========================================================================
 ### Finish
 
-#subroutine::common::msg_now_banner();
-subroutine::common::msg_exit_code($return);
+#$common->msg_exit_code($return);
+$common->msg_now_banner(1);
 exit $return;

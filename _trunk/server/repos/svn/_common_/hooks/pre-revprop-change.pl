@@ -49,27 +49,33 @@ my $action = $ARGV[4]; ### 'A'dded, 'M'odified, or 'D'eleted
 my @new_value = <STDIN>;
 my $new_value = join ('', @new_value);
 
-### Options
-
-my $allow_property_changes = 1; ### prefer not to have script than set this to 0
-
-my $allow_only_log_modification = 1;
-my $backup_values = 1;
-
-### Variables
-
 ### Result
 
-my $return = ($allow_property_changes ? 0 : 1);
+my $return = 0;
 #$return = 2; ### test value
 
 ### ===========================================================================
 ### Class
 
 my $common = common->spawn("pre-revprop-change", $repos);
-
 $common->msg_now_banner(0);
 $common->msg_info_log_only("rev=$revision, user=$user, prop=$propname, action=$action");
+
+$common->load_options($return);
+
+### Options
+
+	### prefer not to have script than set this to 0
+	my $allow_property_changes = $common->get_config_option
+	  ('allow_property_changes', 1, $return);
+
+	my $allow_only_log_modification = $common->get_config_option
+	  ('allow_only_log_modification', 1, $return);
+
+	my $backup_values = $common->get_config_option
+	  ('backup_values', 1, $return);
+
+### Variables
 
 ### ===========================================================================
 ### Modules to use
@@ -94,6 +100,11 @@ use subroutine::common;
 
 ### ===========================================================================
 ### Start
+
+if (! $allow_property_changes)
+{
+	$common->msg_caught("all property changes prohibited.", $return);
+}
 
 ### ---------------------------------------------------------------------------
 ### Check the property being changed

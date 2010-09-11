@@ -170,12 +170,11 @@ $common->msg_info_log_only("txn=$txn, author=$author, next-rev?=$potential_rev")
 ### ---------------------------------------------------------------------------
 ### Parse the filename, property and line configuration files
 
-my $hookpath = File::Spec->canonpath ("$repos/../_common_/hooks/hook_config");
-
 my @filename_config = ();
 if ($enable_path_checks)
 {
-	my $success = open (my $fh, '<', "$hookpath/file-config.txt");
+	my $config_path = $common->find_config_file ("file-config.txt", $return);
+	my $success = open (my $fh, '<', "$config_path");
 	if ($success)
 	{
 		my @config_lines = <$fh>;
@@ -222,7 +221,8 @@ if ($enable_path_checks)
 my %property_config = ();
 if ($enable_property_checks)
 {
-	my $success = open (my $fh, '<', "$hookpath/prop-config.txt");
+	my $config_path = $common->find_config_file ("prop-config.txt", $return);
+	my $success = open (my $fh, '<', "$config_path");
 	if ($success)
 	{
 		my @config_lines = <$fh>;
@@ -277,7 +277,8 @@ if ($enable_property_checks)
 my %line_config = ();
 if ($enable_line_checks)
 {
-	my $success = open (my $fh, '<', "$hookpath/line-config.txt");
+	my $config_path = $common->find_config_file ("line-config.txt", $return);
+	my $success = open (my $fh, '<', "$config_path");
 	if ($success)
 	{
 		my @config_lines = <$fh>;

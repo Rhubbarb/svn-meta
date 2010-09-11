@@ -53,6 +53,7 @@ my $show_options = 0;
 ### Modules to use
 
 use Time::HiRes qw(gettimeofday);
+use File::Spec;
 #use Cwd;
 
 ### ===========================================================================
@@ -80,6 +81,7 @@ sub now ();
 
 sub load_options ($\$); ### ($self, \$return)
 sub get_config_option ($$$\$); ### ($self, $option_name, $default, \$return)
+sub find_config_file ($$\$); ### ($self, $file_name, \$return)
 
 sub msg_print ($$); ### ($self, $text)
 sub msg_info_log_only ($$); ### ($self, $text)
@@ -361,6 +363,43 @@ sub get_config_option ($$$\$) ### ($self, $option_name, $default, \$return)
 	}
 
 	return $value;
+}
+
+sub find_config_file ($$\$) ### ($self, $file_name, \$return)
+{
+	my $self = shift;
+	my $file_name = shift;
+	my $return = \shift;
+
+	my $repos = $self->{'repos'};
+	my $repos_path = File::Spec->canonpath ("$repos/hooks/_hook_config/$file_name");
+	my $common_path = File::Spec->canonpath ("$repos/../_common_/hooks/hook_config/$file_name");
+
+	#print STDERR ("$repos_path\n$common_path\n");
+
+	my $path = ();
+	if ( -e $repos_path )
+	{
+		if ($show_options)
+		{
+			$self->msg_print ("CONFIG: REPOS {$file_name}");
+		}
+		$path = $repos_path;
+	}
+	elsif ( -e $common_path )
+	{
+		if ($show_options)
+		{
+			$self->msg_print ("CONFIG: GLOBAL {$file_name}");
+		}
+		$path = $common_path;
+	}
+	else
+	{
+		$self->msg_error ("no configuration file <$file_name> found.", $$return);
+	}
+
+	return $path;
 }
 
 sub msg_print ($$) ### ($self, $text)

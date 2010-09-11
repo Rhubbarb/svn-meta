@@ -61,7 +61,3 @@ This is hard, so might only be possible at run-time.
 	(templated)
 
 implement a branch obsoleting mechanism?
-
-external options file(s)
-	(templated)
-	per-repos configuration files

@@ -105,7 +105,7 @@ if ($create_revision_dump)
 	my $reposname = $reposbase . $reposext;
 
 	my $repos_bak = "$repos/../../svn-bak/${reposname}-bak/dump/";
-	$repos_bak = File::Spec->canonpath ($repos_bak);
+	$repos_bak = File::Spec->canonpath ($repos_bak) . '/';
 	#$common->msg_debug("repos-bak = ${repos_bak}");
 
 	my $now = common::today_now();
@@ -129,10 +129,16 @@ if ($create_revision_dump)
 	#$common->write_value ( "${repos_bak}/${prefix}1.new${suffix}", $new_value, $return );
 
 	### write the dumpdata
-	#`svnadmin dump $repos --incremental -r $revision > "${repos_bak}/${prefix}${suffix}"`;
+	#`svnadmin dump $repos --incremental -r $revision > "${repos_bak}${prefix}${suffix}"`;
 	### why doesn't that work reliably??
 	my $dump = `svnadmin dump $repos --incremental -r $revision`;
-	$common->write_value ( "${repos_bak}/${prefix}${suffix}", $dump, $return );
+	$common->write_value ( "${repos_bak}${prefix}${suffix}", $dump, $return );
+
+	if ( ! -s $repos_bak . $prefix . $suffix )
+	{
+		$common->msg_warn("failed to create revision back-up.", $return);
+		$common->msg_request("please inform the repository administrator.");
+	}
 }
 
 ### ===========================================================================
@@ -140,4 +146,4 @@ if ($create_revision_dump)
 
 #$common->msg_exit_code($return);
 $common->msg_now_banner(1);
-#exit $return;
+exit $return;

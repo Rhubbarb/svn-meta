@@ -86,9 +86,11 @@ sub find_config_file ($$\$); ### ($self, $file_name, \$return)
 sub msg_print ($$); ### ($self, $text)
 sub msg_info_log_only ($$); ### ($self, $text)
 sub msg_error ($$\$); ### ($self, $text, \$return)
+sub msg_warn ($$\$); ### ($self, $text, \$return)
 sub msg_info ($$); ### ($self, $text)
 sub msg_caught ($$\$); ### ($self, $text, \$return)
 sub msg_advice ($$); ### ($self, $text)
+sub msg_request ($$); ### ($self, $text)
 sub msg_debug ($$); ### ($self, $text)
 sub msg_now_banner($$$); ### ($self, $end)
 sub msg_exit_code ($$); ### ($self, $return)
@@ -419,6 +421,7 @@ sub msg_info_log_only ($$) ### ($self, $text)
 	$self->_msg_to_log("INFO: $text") if ($logging_enabled);
 }
 
+### for use in pre-* hooks
 sub msg_error ($$\$) ### ($self, $text, \$return)
 {
 	my $self = shift;
@@ -426,6 +429,17 @@ sub msg_error ($$\$) ### ($self, $text, \$return)
 	my $return = \shift;
 	
 	$self->msg_print ("ERROR: $text");
+	$$return = 1;
+}
+
+### for use in post-* hooks
+sub msg_warn ($$\$) ### ($self, $text, \$return)
+{
+	my $self = shift;
+	my $text = shift;
+	my $return = \shift;
+	
+	$self->msg_print ("WARNING: $text");
 	$$return = 1;
 }
 
@@ -453,6 +467,14 @@ sub msg_advice ($$) ### ($self, $text)
 	my $text = shift;
 	
 	$self->msg_print ("ADVICE: $text");
+}
+
+sub msg_request ($$) ### ($self, $text)
+{
+	my $self = shift;
+	my $text = shift;
+	
+	$self->msg_print ("REQUEST: $text");
 }
 
 sub msg_debug ($$) ### ($self, $text)

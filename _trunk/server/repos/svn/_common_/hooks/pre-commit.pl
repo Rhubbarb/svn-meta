@@ -383,6 +383,7 @@ if ($enable_path_checks or $enable_property_checks
 		my $filename = $filebase . $fileext;
 		my $is_directory = ($filename eq "");
 
+		#$common->msg_debug(">>> path: $filepath");
 		#$common->msg_debug("$file_action$meta_action$with_history $filedir$filebase$fileext");
 
 		if (($file_action eq "A")
@@ -397,11 +398,11 @@ if ($enable_path_checks or $enable_property_checks
 				foreach my $entry (@filename_config)
 				{
 					my $pattern = $entry->[0];
-					$path_allowed = $entry->[1];
 
 					if ("/".$filepath ~~ $pattern)
 					{
-						#$common->msg_debug(">>> path-check match: $filepath ~~ $pattern");
+						#$common->msg_debug(">>> file path-check match: $filepath ~~ $pattern");
+						$path_allowed = $entry->[1];
 						last;
 					}
 				}
@@ -416,12 +417,19 @@ if ($enable_path_checks or $enable_property_checks
 				my @props_actual = `svnlook proplist -t $txn $repos $filepath`;
 				my %props_actual = map { common::trim($_) => 0 } @props_actual;
 
-				while((my $glob, my $props) = each(%property_config))
+				#while((my $glob, my $props) = each(%property_config))
+				foreach my $glob (keys(%property_config))
 				{
+					my $props = $property_config{$glob};
+
+					#$common->msg_debug(">   prop path-check: $filepath ~~? $glob");
 					if ($filename ~~ glob_to_regex($glob))
 					{
-						while((my $prop_name, my $entry) = each(%{$props}))
+						#$common->msg_debug(">>> prop path-check match: $filepath ~~ $glob");
+						#while((my $prop_name, my $entry) = each(%{$props}))
+						foreach my $prop_name (keys(%{$props}))
 						{
+							my $entry = $props->{$prop_name};
 							my $exists = exists $props_actual{$prop_name};
 
 							my $prop_value_actual

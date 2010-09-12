@@ -1,59 +1,128 @@
 
-release/distribution script
+HOOKS
+-----
 
-*** verify script
-*** hot-copy script
-schedule setup scripts (Windows sc?; Linux cron?)
+	General
+	-------
 
-repository structure setup script
+		branch obsoleting mechanism?
+		for extensionless files, implement a hash-bang check?
+		pre-commit (of merge) : check for correctness of position svn:mergeinfo information - how?
 
-implement conditions on deleted lines?
-implement regex implies regex for lines?
+		on property checks, define template extension ".tmpl";
+			check properties of that file type after stripping one layer of extension.
 
-implement existential lines?
+	Start-Commit
+	------------
 
-CLIENT_SIDE EDITING SCRIPTS?
-* e.g. find and/or apply line-checks
+		repository disable
 
-Specify Formatting of errors for line checks?
+	Pre-Commit
+	----------
 
-Post-commit empty message warning?
+		message
+		-------
 
-? check presence of keywords in files (in addition to properties)
+			$check_message_nonempty>
+				[This could be enhanced to be of a certain minimum length, or to contain certain mandatory words.]
+				<log-config.txt|pl>?
+					(multi-line regex?)
+					(templated)
 
-? check file encoding? (e.g. 1252 versus UCS-2_LE; e.g. Win v. Unix)
+		paths
+		-----
 
-check for final empty line in file
-(first line and last line conditions?)
+			directory/file-level access control
 
-bash-style hook wrappers [and test]
-bash-style prepare_environment.sh [and test]
+		properties
+		----------
 
-on property checks, define template extension ".tmpl";
-check properties of that file type after stripping one layer of extension.
+			implement svn:property intersection configuration option:
+				+ mandatory = exact
+				+ mandatory ^= non-empty intersection (one or more alternatives)
+				= optional = exact
+				= optional ^= non-empty intersection (one or more alternatives)
+				- prohibited
+			implement svn:property alternatives option
+				+ mandatory = single value
+				+ mandatory |= pipe-separated alternatives (one alternative only)
 
-for extensionless files, implement a hash-bang check?
+		lines
+		-----
 
-pre-commit (of merge) : check for correctness of position svn:mergeinfo information - how?
+			check for final empty line in file
+				(first line and last line conditions?)
 
-implement svn:property intersection configuration option:
-	+ mandatory = exact
-	+ mandatory ^= non-empty intersection (one or more alternatives)
-	= optional = exact
-	= optional ^= non-empty intersection (one or more alternatives)
-	- prohibited
-implement svn:property alternatives option
-	+ mandatory = single value
-	+ mandatory |= pipe-separated alternatives (one alternative only)
+			conditions on deleted lines?
+			regex implies regex for lines?
+			existential lines?
 
-?Implement duplication detection for globs?
-That would be nice in a script.
-This is hard, so might only be possible at run-time.
+			specify formatting of errors for line checks?
 
-<$check_message_nonempty>
-[This could be enhanced to be of a certain minimum length, or to contain certain mandatory words.]
-<log-config.txt|pl>?
-	(multi-line regex?)
-	(templated)
+			check for final empty line in file
+				(first line and last line conditions?)
 
-implement a branch obsoleting mechanism?
+		mixed
+		-----
+
+			? check presence of keywords in files (in addition to properties)
+
+		other
+		-----
+
+			? check file encoding? (e.g. 1252 versus UCS-2_LE; e.g. Win v. Unix)
+
+	Post-Commit
+	-----------
+
+		post-commit empty message warning?
+		email
+
+	Pre-RevProp-Change
+	------------------
+
+	Post-RevProp-Change
+	-------------------
+
+		email
+
+	Locks
+	-----
+
+
+META-HOOK
+---------
+
+	?implement duplication detection for globs?
+	That would be nice in a script.
+	This is hard, so might only be possible at run-time.
+
+
+WRAPPERS
+--------
+
+	bash-style hook wrappers [and test]
+	bash-style prepare_environment.sh [and test]
+
+
+CLIENT
+------
+
+	client_side editing scripts?
+		* e.g. find and/or apply line-checks
+
+
+REPOSITORY ADMIN
+----------------
+
+	*** verify script
+	*** hot-copy script
+	schedule setup scripts (Windows sc?; Linux cron?)
+	repository structure setup script
+		(svnmucc/perl)
+
+
+DISTRIBUTION
+------------
+
+	release/distribution script

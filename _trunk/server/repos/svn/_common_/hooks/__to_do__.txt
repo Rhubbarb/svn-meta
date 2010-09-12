@@ -6,6 +6,7 @@ HOOKS
 	-------
 
 		branch obsoleting mechanism?
+			(client configuarable)
 		for extensionless files, implement a hash-bang check?
 		pre-commit (of merge) : check for correctness of position svn:mergeinfo information - how?
 
@@ -24,7 +25,9 @@ HOOKS
 		-------
 
 			$check_message_nonempty>
-				[This could be enhanced to be of a certain minimum length, or to contain certain mandatory words.]
+				enhance
+					minimum length
+					contain certain mandatory words
 				<log-config.txt|pl>?
 					(multi-line regex?)
 					(templated)
@@ -38,14 +41,11 @@ HOOKS
 		----------
 
 			implement svn:property intersection configuration option:
-				+ mandatory = exact
 				+ mandatory ^= non-empty intersection (one or more alternatives)
-				= optional = exact
 				= optional ^= non-empty intersection (one or more alternatives)
-				- prohibited
 			implement svn:property alternatives option
-				+ mandatory = single value
 				+ mandatory |= pipe-separated alternatives (one alternative only)
+				+ mandatory ~~ property regexes
 
 		lines
 		-----

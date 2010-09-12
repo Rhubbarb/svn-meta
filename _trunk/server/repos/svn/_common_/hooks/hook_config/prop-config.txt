@@ -53,8 +53,17 @@
 
 ### Within a section, the first non-whitespace character is:
 ###   + for a mandatory property (with value)
-###   - for a prohibited property
+###   - for a prohibited property (any value is ignored)
 ###   = for an optional property but with a restricted value
+
+### Values follow =
+###   + property-name = property_value
+### in the case of svn:keywords, the relations
+###   <= subset and
+###   >= superset
+### may also be used.
+
+### In the case of svn:keywords, aliases are intelligently recognised.
 
 ### Comment lines have a hash (#) as the first non-whitespace character.
 
@@ -66,7 +75,7 @@
 ### 'C' / C++
 	g<*.c *.cpp *.h *.hpp>
 		+ svn:eol-style = native
-		+ svn:keywords = Rev URL
+		+ svn:keywords >= Rev URL
 		+ svn:mime-type = text/plain
 
 	g<*.rc *.rc2>
@@ -78,32 +87,32 @@
 
 ### C#
 	g<*.cs>
-		+ svn:keywords = Rev URL
+		+ svn:keywords >= Rev URL
 		+ svn:mime-type = text/plain
 
 ### Java
 	g<*.java *.jsp>
 		+ svn:eol-style = native
-		+ svn:keywords = Rev URL
+		+ svn:keywords >= Rev URL
 		+ svn:mime-type = text/plain
 
 ### Perl
 	g<*.pl *.pm>
 		+ svn:eol-style = native
 		+ svn:executable
-		+ svn:keywords = Rev URL
+		+ svn:keywords >= Rev URL
 		+ svn:mime-type = text/plain
 
 ### Python
 	g<*.py>
 		+ svn:eol-style = native
 		+ svn:executable
-		+ svn:keywords = Rev URL
+		+ svn:keywords >= Rev URL
 		+ svn:mime-type = text/x-python
 
 ### EcmaScript
 	g<*.js>
-		+ svn:keywords = Rev URL
+		+ svn:keywords >= Rev URL
 
 		#+ svn:mime-type = application/x-javascript
 
@@ -115,7 +124,7 @@
 ### Q
 	g<*.q>
 		+ svn:executable
-		+ svn:keywords = Rev URL
+		+ svn:keywords >= Rev URL
 		+ svn:mime-type = text/plain
 
 ### Pure
@@ -139,7 +148,7 @@
 	g<*.vbs>
 		+ svn:eol-style = CRLF
 		+ svn:executable
-		+ svn:keywords = Rev URL
+		+ svn:keywords >= Rev URL
 		+ svn:mime-type = text/plain
 
 ### plain text
@@ -212,7 +221,7 @@
 ### TeX / LaTeX
 	g<*.tex>
 		+ svn:eol-style = native
-		= svn:keywords = Rev URL
+		= svn:keywords >= Rev URL
 		#+ svn:mime-type = application/x-tex
 		+ svn:mime-type = text/plain
 

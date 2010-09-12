@@ -36,14 +36,10 @@ for extensionless files, implement a hash-bang check?
 
 pre-commit (of merge) : check for correctness of position svn:mergeinfo information - how?
 
-implement svn:property subset/superset/intersection configuration option:
+implement svn:property intersection configuration option:
 	+ mandatory = exact
-	+ mandatory <= non-empty subset (non-strict)
-	+ mandatory >= superset (non-strict)
 	+ mandatory ^= non-empty intersection (one or more alternatives)
 	= optional = exact
-	= optional <= subset (non-strict)
-	= optional >= superset (non-strict)
 	= optional ^= non-empty intersection (one or more alternatives)
 	- prohibited
 implement svn:property alternatives option

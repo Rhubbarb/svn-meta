@@ -115,6 +115,8 @@ sub special_filter ($$)
 	my $prop_name = shift;
 	my $prop_value = shift;
 
+	my @ret_val = ();
+
 	if ($prop_name eq "svn:keywords")
 	{
 		my @keywords = split(/ +/,$$prop_value);
@@ -131,7 +133,9 @@ sub special_filter ($$)
 		}
 		@new_keywords = sort(@new_keywords);
 		$$prop_value = join(" ",@new_keywords);
+		@ret_val = @new_keywords;
 	}
+	return @ret_val
 }
 
 ### ===========================================================================
@@ -240,25 +244,26 @@ if ($enable_property_checks)
 			{
 				@globs = split (/\s+/, $1);
 			}
-			elsif ($line ~~ /^\s*([-+=])\s*([^=]*[^=\s])\s*=\s*(.*[^\s])\s*$/)
+			elsif ($line ~~ /^\s*([-+=])\s*([^=\s]+)\s*([<>]?=)\s*(.*[^\s])\s*$/)
 			{
 				my $required = ($1 eq "+");
 				my $prohibited = ($1 eq "-");
 				my $prop_name = $2;
-				my $prop_value = $3;
+				my $operator = $3;
+				my $prop_value = $4;
 				foreach my $glob (@globs)
 				{
-					$property_config{$glob}{$prop_name} = [$required, $prohibited, $prop_value];
+					$property_config{$glob}{$prop_name} = [$required, $prohibited, $prop_value, $operator];
 				}
 			}
-			elsif ($line ~~ /^\s*([-+=])\s*(.*[^\s])\s*$/)
+			elsif ($line ~~ /^\s*([-+=])\s*([^=\s]+)\s*$/)
 			{
 				my $required = ($1 eq "+");
 				my $prohibited = ($1 eq "-");
 				my $prop_name = $2;
 				foreach my $glob (@globs)
 				{
-					$property_config{$glob}{$prop_name} = [$required, $prohibited, ()];
+					$property_config{$glob}{$prop_name} = [$required, $prohibited, (), ()];
 				}
 			}
 			else
@@ -437,12 +442,13 @@ if ($enable_path_checks or $enable_property_checks
 									? `svnlook propget -t $txn $repos $prop_name $filepath` # 2> $devnull
 									: ();
 							#my $exists = not $?;
-							special_filter ($prop_name, \$prop_value_actual);
+							my @prop_words_actual = special_filter ($prop_name, \$prop_value_actual);
 
 							my $prop_value_specified = $entry->[2];
-							special_filter ($prop_name, \$prop_value_specified);
+							my @prop_words_specified = special_filter ($prop_name, \$prop_value_specified);
 							my $required = $entry->[0];
 							my $prohibited = $entry->[1];
+							my $operator = $entry->[3];
 
 							#$common->msg_debug(">>> fn=$filename [$glob] prop=$prop_name (exists=$exists)");
 							#$common->msg_debug("  > spec=$required/$prohibited $prop_value_specified");
@@ -456,9 +462,52 @@ if ($enable_path_checks or $enable_property_checks
 								}
 								elsif ($prop_value_specified)
 								{
-									unless ($prop_value_actual eq $prop_value_specified)
+									if ($operator eq '=')
 									{
-										$common->msg_caught("<$filepath> prop $prop_name value not \"$prop_value_specified\" for <$glob>.", $return);
+										unless ($prop_value_actual eq $prop_value_specified)
+										{
+											$common->msg_caught("<$filepath> prop $prop_name value not \"$prop_value_specified\" for <$glob>.", $return);
+										}
+									}
+									elsif ($operator ~~ /[<>]=/)
+									{
+										### establish the relationship
+										my @l = @prop_words_actual; ### 'left'
+										my @r = @prop_words_specified; ### 'right'
+										my $sub = 1; ### is-subset
+										my $sup = 1; ### is-superset
+
+										while (@l && @r)
+										{
+											my $c = $l[0] cmp $r[0];
+											$sub = 0 if $c < 0;
+											shift (@l) if $c <= 0;
+											$sup = 0 if $c > 0;
+											shift (@r) if $c >= 0;
+										}
+										$sub = 0 if @l;
+										$sup = 0 if @r;
+
+										my $cond = 0;
+										if ($operator eq '<=')
+										{
+											$cond = $sub;
+										}
+										elsif ($operator eq '>=')
+										{
+											$cond = $sup;
+										}
+
+										#$common->msg_debug ("$filepath : $prop_value_actual $operator? $prop_value_specified $sub $sup $cond");
+
+										unless ($cond)
+										{
+											$common->msg_caught("<$filepath> prop $prop_name value not $operator \"$prop_value_specified\" for <$glob>.", $return);
+										}
+									}
+									else
+									{
+										$common->error("Unhandled operator $operator.", $return);
 									}
 								}
 							}
@@ -468,7 +517,7 @@ if ($enable_path_checks or $enable_property_checks
 								{
 									if ($prop_value_specified)
 									{
-										$common->msg_caught("<$filepath> prop $prop_name=$prop_value_specified required for <$glob>.", $return);
+										$common->msg_caught("<$filepath> prop $prop_name $operator $prop_value_specified required for <$glob>.", $return);
 									}
 									else
 									{

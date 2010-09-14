@@ -16,8 +16,6 @@ HOOKS
 	Start-Commit
 	------------
 
-		repository disable
-
 	Pre-Commit
 	----------
 
@@ -75,7 +73,6 @@ HOOKS
 	Post-Commit
 	-----------
 
-		post-commit empty message warning?
 		email
 
 	Pre-RevProp-Change

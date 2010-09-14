@@ -58,12 +58,12 @@ $common->msg_now_banner(0);
 $common->msg_info_log_only("user=$user");
 #$common->msg_debug("capabilities = $capabilities");
 
-#$common->load_options($return);
+$common->load_options($return);
 
 ### Options
 
-	#my $option_name = $common->get_config_option
-	#  ('option_name', default_value, $return);
+	my $disable_all_commits = $common->get_config_option
+	  ('disable_all_commits', 0, $return);
 
 ### Variables
 
@@ -89,6 +89,11 @@ my @capabilities = split(/:/, $capabilities);
 
 ### ===========================================================================
 ### Start
+
+if ($disable_all_commits)
+{
+	$common->msg_caught("all commits to this repository have been disabled by the administrator.", $return);
+}
 
 ### ---------------------------------------------------------------------------
 ### Check for required capabilities

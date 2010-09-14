@@ -59,6 +59,9 @@ $common->load_options($return);
 
 ### Options
 
+	my $check_message_nonempty = $common->get_config_option
+	  ('check_message_nonempty', 1, $return);
+
 	my $create_revision_dump = $common->get_config_option
 	  ('create_revision_dump', 1, $return);
 
@@ -89,11 +92,25 @@ use subroutine::common;
 
 #my $youngest = `svnlook youngest $repos`;
 
+my $message = `svnlook log $repos -r $revision`;
+
 ### ---------------------------------------------------------------------------
 ### Other...
 
 ### ===========================================================================
 ### Start
+
+### ---------------------------------------------------------------------------
+### Check the message
+
+if ($check_message_nonempty)
+{
+	if (common::trim($message) eq "")
+	{
+		$common->msg_warn("empty message.", $return);
+		$common->msg_request("please modify the svn:log property on revision $revision.", $return);
+	}
+}
 
 ### ---------------------------------------------------------------------------
 ### Perform a dump of the revision

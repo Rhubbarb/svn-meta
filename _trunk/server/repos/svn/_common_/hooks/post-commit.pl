@@ -115,7 +115,7 @@ if ($check_message_nonempty)
 ### ---------------------------------------------------------------------------
 ### Perform a dump of the revision
 
-### store in svn-bak/reposname-bak/prop/rev_prop.dat
+### store in svn-bak/reposname-bak/dump-solo/rev_prop.dat
 
 if ($create_revision_dump)
 {
@@ -123,7 +123,7 @@ if ($create_revision_dump)
 	(my $reposbase, my $reposdir, my $reposext) = fileparse ($repos);
 	my $reposname = $reposbase . $reposext;
 
-	my $repos_bak = "$repos/../../svn-bak/${reposname}-bak/dump/";
+	my $repos_bak = "$repos/../../svn-bak/${reposname}-bak/dump-solo/";
 	$repos_bak = File::Spec->canonpath ($repos_bak) . '/';
 	#$common->msg_debug("repos-bak = ${repos_bak}");
 

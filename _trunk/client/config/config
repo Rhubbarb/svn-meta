@@ -256,6 +256,7 @@ enable-auto-props = yes
 *.dvi = svn:mime-type=application/x-dvi;svn:needs-lock
 *.exe = svn:executable;svn:mime-type=application/octet-stream
 *.gif = svn:mime-type=image/gif;svn:needs-lock
+*.gviz = svn:eol-style=native;svn:keywords=Rev URL;svn:mime-type=text/plain
 *.gz = svn:mime-type=application/x-gzip;svn:needs-lock
 *.h = svn:eol-style=native;svn:keywords=Rev URL;svn:mime-type=text/plain
 *.hpp = svn:eol-style=native;svn:keywords=Rev URL;svn:mime-type=text/plain
@@ -326,6 +327,8 @@ enable-auto-props = yes
 *.txt = svn:eol-style=native;svn:mime-type=text/plain
 *.vbs = svn:eol-style=CRLF;svn:executable;svn:keywords=Rev URL;svn:mime-type=text/plain
 #*.vcproj = svn:eol-style=CRLF
+#*.vcxproj = svn:eol-style=CRLF
+#*.vcxproj.filters = svn:eol-style=CRLF
 *.vsd = svn:mime-type=application/x-visio;svn:needs-lock
 #*.vsprops = svn:eol-style=CRLF
 *.vst = svn:mime-type=application/x-visio;svn:needs-lock

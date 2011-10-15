@@ -153,11 +153,16 @@ global-ignores =
 	*.pyo
 	*.res
 	*.scc
+	*.sdf
 	*.suo
 	*.tlb
 	*.tmp
 	*.user
 	*.vspscc
+	*___[Ww]in32_[Dd]ebug
+	*___[Ww]in32_[Dd]ebug[Uu]
+	*___[Ww]in32_[Rr]elease
+	*___[Ww]in32_[Rr]elease[Uu]
 	*.zip
 	*~
 	.~lock.*.o??#
@@ -170,22 +175,38 @@ global-ignores =
 	~*.xlsx
 	bin
 	build
+	build_int
 	BuildLog.htm
 	Copy[!a-zA-Z0-9_]([1-9][0-9])[!a-zA-Z0-9_]of[!a-zA-Z0-9_]*
 	Copy[!a-zA-Z0-9_]([2-9])[!a-zA-Z0-9_]of[!a-zA-Z0-9_]*
 	Copy[!a-zA-Z0-9_]of[!a-zA-Z0-9_]*
 	[Dd]ebug
+	Debug[!a-zA-Z0-9][Ss]tatic
+	DebugStatic
 	[Dd]ebug[Uu]
+	Debug_Unicode
 	dist
+	ipch
 	lib
+	[Ll]ib[Dd]ebug[Uu]
+	[Ll]ib[Rr]el[Uu]
+	[Ll]ib[Rr]elease[Uu]
+	msbuild.log
 	obj
 	out
 	Output-Build.txt
 	RC[ab][0-9][0-9][0-9][0-9][0-9]
 	[Rr]elease
+	Release[!a-zA-Z0-9][Ss]tatic
+	ReleaseStatic
 	[Rr]elease[Uu]
 	SciTE.*.session
 	SciTE.session
+	Release_Unicode
+	Static[!a-zA-Z0-9_]Debug
+	Static[!a-zA-Z0-9_]Release
+	StaticDebug
+	StaticRelease
 	Thumbs.db
 	UpgradeLog.XML
 	UpgradeReport*.*
@@ -266,7 +287,7 @@ enable-auto-props = yes
 *.jpg = svn:mime-type=image/jpeg;svn:needs-lock
 *.js = svn:keywords=Rev URL;svn:mime-type=text/javascript
 *.jsp = svn:eol-style=native;svn:keywords=Rev URL;svn:mime-type=text/plain
-*.mak = svn:eol-style=native;svn:mime-type=text/plain
+*.mak = svn:eol-style=native;svn:keywords=Rev URL;svn:mime-type=text/plain
 *.mdb = svn:mime-type=application/x-msaccess;svn:needs-lock
 *.mpp = svn:mime-type=application/vnd.ms-project;svn:needs-lock
 *.msg = svn:mime-type=application/vnd.ms-outlook;svn:needs-lock
@@ -333,6 +354,7 @@ enable-auto-props = yes
 #*.vsprops = svn:eol-style=CRLF
 *.vst = svn:mime-type=application/x-visio;svn:needs-lock
 *.vsw = svn:mime-type=application/x-visio;svn:needs-lock
+#*.xhtml = svn:eol-style=native;svn:mime-type=application/xhtml+xml
 *.xla = svn:mime-type=application/vnd.ms-excel;svn:needs-lock
 *.xlam = svn:mime-type=application/vnd.ms-excel.addin.macroEnabled.12;svn:needs-lock
 *.xlc = svn:mime-type=application/vnd.ms-excel;svn:needs-lock
@@ -350,4 +372,4 @@ enable-auto-props = yes
 *.xsl = svn:eol-style=native;svn:mime-type=text/xml
 *.xslt = svn:eol-style=native;svn:mime-type=text/xml
 *.zip = svn:mime-type=application/zip;svn:needs-lock
-Makefile = svn:eol-style=native;svn:mime-type=text/plain
+Makefile = svn:eol-style=native;svn:keywords=Rev URL;svn:mime-type=text/plain

@@ -38,10 +38,10 @@
 ###                              may be cached to disk.
 ###   username                   Specifies the default username.
 ###
-### Set store-passwords to 'no' to avoid storing passwords in the
-### auth/ area of your config directory.  It defaults to 'yes',
-### but Subversion will never save your password to disk in
-### plaintext unless you tell it to.
+### Set store-passwords to 'no' to avoid storing passwords on disk
+### in any way, including in password stores. It defaults to 'yes',
+### but Subversion will never save your password to disk in plaintext
+### unless you tell it to.
 ### Note that this option only prevents saving of *new* passwords;
 ### it doesn't invalidate existing passwords.  (To do that, remove
 ### the cache files by hand as described in the Subversion book.)

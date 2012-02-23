@@ -117,8 +117,10 @@ global-ignores =
 	*[!a-zA-Z0-9_]-[!a-zA-Z0-9_]Copy[!a-zA-Z0-9_]([2-9]).*
 	*.7z
 	*.aps
+	*.backup
 	*.bak
 	*.bin
+	*.bsc
 	*.cd
 	*.class
 	*.dep
@@ -132,30 +134,34 @@ global-ignores =
 	*.ilk
 	*.intermediate.manifest
 	*.jar
+	*.lastbuildstate
 	*.lib
 	*.lnk
+	*.log
 	*.ncb
 	*.o
 	*.obj
 	*.old
+	*.opensdf
 	*.opt
 	*.pch
 	*.pdb
 	*.plg
 	*.pyc
 	*.pyo
+	*.qry
 	*.res
 	*.scc
 	*.sdf
 	*.suo
 	*.tlb
+	*.tlog
+	*.trg
 	*.tmp
+	*.unsuccessfulbuild
+	*.URL
 	*.user
 	*.vspscc
-	*___[Ww]in32_[Dd]ebug
-	*___[Ww]in32_[Dd]ebug[Uu]
-	*___[Ww]in32_[Rr]elease
-	*___[Ww]in32_[Rr]elease[Uu]
 	*.zip
 	*~
 	.~lock.*.o??#
@@ -174,32 +180,19 @@ global-ignores =
 	Copy[!a-zA-Z0-9_]([2-9])[!a-zA-Z0-9_]of[!a-zA-Z0-9_]*
 	Copy[!a-zA-Z0-9_]of[!a-zA-Z0-9_]*
 	[Dd]ebug
-	Debug[!a-zA-Z0-9][Ss]tatic
-	DebugStatic
-	[Dd]ebug[Uu]
-	Debug_Unicode
+	[Dd]ebug64
 	dist
 	ipch
 	lib
-	[Ll]ib[Dd]ebug[Uu]
-	[Ll]ib[Rr]el[Uu]
-	[Ll]ib[Rr]elease[Uu]
 	msbuild.log
 	obj
 	out
 	Output-Build.txt
 	RC[ab][0-9][0-9][0-9][0-9][0-9]
 	[Rr]elease
-	Release[!a-zA-Z0-9][Ss]tatic
-	ReleaseStatic
-	[Rr]elease[Uu]
+	[Rr]elease64
 	SciTE.*.session
 	SciTE.session
-	Release_Unicode
-	Static[!a-zA-Z0-9_]Debug
-	Static[!a-zA-Z0-9_]Release
-	StaticDebug
-	StaticRelease
 	Thumbs.db
 	UpgradeLog.XML
 	UpgradeReport*.*
@@ -255,6 +248,8 @@ enable-auto-props = yes
 # Makefile = svn:eol-style=native
 
 ### Rob's auto-props
+*.7z = svn:needs-lock
+*.asm = svn:eol-style=native;svn:mime-type=text/plain
 *.bat = svn:eol-style=CRLF;svn:executable;svn:keywords=Rev URL;svn:mime-type=text/plain
 *.bmp = svn:mime-type=image/x-ms-bmp;svn:needs-lock
 *.bz2 = svn:mime-type=application/x-bzip2;svn:needs-lock
@@ -263,6 +258,7 @@ enable-auto-props = yes
 *.cpp = svn:eol-style=native;svn:keywords=Rev URL;svn:mime-type=text/plain
 *.cs = svn:keywords=Rev URL;svn:mime-type=text/plain
 *.css = svn:eol-style=native;svn:mime-type=text/css
+*.csv = svn:eol-style=CRLF;svn:mime-type=text/csv
 *.dll = svn:executable;svn:mime-type=application/x-msdownload
 *.doc = svn:mime-type=application/msword;svn:needs-lock
 *.docm = svn:mime-type=application/vnd.ms-word.document.macroEnabled.12;svn:needs-lock

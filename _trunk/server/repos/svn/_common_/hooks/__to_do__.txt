@@ -22,7 +22,7 @@ HOOKS
 		message
 		-------
 
-			$check_message_nonempty>
+			$check_message_nonempty:
 				enhance
 					minimum length
 					contain certain mandatory words
@@ -69,6 +69,8 @@ HOOKS
 		-----
 
 			? check file encoding? (e.g. 1252 versus UCS-2_LE; e.g. Win v. Unix)
+
+			define _vendor variable, and exclude file checks from vendor drops
 
 	Post-Commit
 	-----------

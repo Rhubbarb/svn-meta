@@ -73,7 +73,9 @@
   + g<*.bat *.vbs>
   + g<*.txt>
   + g<*.reg>
+  + g<Makefile>
   + re</.*\.(dsp|dsw|vcproj|sln|vsprops)$>
+  + re</.*\.(vcxproj(\.filters)?)$>
   + re</.*\.(html|js|php|java|jsp)$>
   + re</.*\.(xml|css|xsl|xsd)$>
 

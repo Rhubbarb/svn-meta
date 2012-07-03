@@ -1,0 +1,9 @@
+#Why this is here
+
+= Introduction =
+
+Having used a Subversion for a few years, and having worked (informally) as a configuration manager at a number of companies, I started to develop this set of configuration files. These have been worked on somewhat intermittently.
+
+Now I work for a company that uses Git. I am still fond of Subversion, but now am unlikely to continue development on this *suite*.
+
+I hope these files will be helpful to someone maintaining or administering a Subversion server.

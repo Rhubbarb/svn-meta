@@ -1,0 +1,6 @@
+#Note on Documentation
+
+= Documentation =
+
+Please see:
+  * the [http://code.google.com/p/svn-meta/source/browse/_trunk/server/repos/_admin_/docs/ Open Office Documents] in the sources

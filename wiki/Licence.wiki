@@ -1,0 +1,9 @@
+#how the source files are licensed
+
+= Licence =
+
+I would like these files to be used in the spirit of the GPL.
+
+The files currently contain a bespoke licence. As these files are intended to be used to help develop _other_ software, I did not wish to prevent commercial _use_ of the suite on a company's Subversion server.
+
+On the other hand, these files, or modified versions of these files, must remain free to use and open source.

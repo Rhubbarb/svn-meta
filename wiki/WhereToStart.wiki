@@ -1,0 +1,11 @@
+#some places at which you might like to look.
+
+= Directories =
+
+  * some example server [http://code.google.com/p/svn-meta/source/browse/_trunk/server/repos/svn/_common_/hooks/hook_config/ hook config] files
+
+  * an example client [http://code.google.com/p/svn-meta/source/browse/_trunk/client/config/config config] file with auto-props and ignores
+
+  * some simple [http://code.google.com/p/svn-meta/source/browse/_trunk/client/utilities/linux-bash Linux Bash] utility scripts
+
+  * some admin [http://code.google.com/p/svn-meta/source/browse/_trunk/server/repos/svn/_common_/hooks/utility/ utility scripts], e.g. for viewing property settings

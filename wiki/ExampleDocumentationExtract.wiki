@@ -1,0 +1,32 @@
+_DOCUMENTATION EXTRACT : _
+
+= Pre-commit Line Configuration <line-config.txt> =
+
+This file may be used to configure the checking of the format or content of lines added or modified under version control.
+
+If a file `<hooks/_hook_config/line-config.txt>` exists in the repository, then that takes precedence (as a whole) over any file `<hooks/hook_config/line-config.txt>` in the common directory.
+
+== Syntax ==
+
+To indicate a section (for certain filename patterns), enclose space-separated globs in g<angle brackets> with leading 'g'; regexes not supported here.
+
+Within a section, the first non-whitespace character is:
+ - for a <"description"> in angle brackets and quotes,
+   followed by prohibited pattern
+   expressed as a regex in re<angle brackets> with leading 're'
+
+Comment lines have a hash (#) as the first non-whitespace character.
+
+== Example Configuration File ==
+
+Note the comment strings in the example, which are used to generate an intelligible error message.
+
+{{{
+    ### The following rules are tested in an arbitrary order;
+    ### the globs should be mutually exclusive, but that is not checked.
+
+    ### 'C' / C++
+      g<*.c *.cpp *.h *.hpp *.py *.pl>
+        - <"indentation with space"> re <^\s* \s*[^\s]>
+        - <"trailing space"> re <\s$>
+}}}
